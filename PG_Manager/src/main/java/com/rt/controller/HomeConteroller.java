@@ -29,7 +29,7 @@ public class HomeConteroller {
 		
 	}
 	
-	@RequestMapping("/bedAssiged")
+	@RequestMapping("/bedAssigned")
 	public String bedAssigedForm() {
 		
 		return "bedAssiged";

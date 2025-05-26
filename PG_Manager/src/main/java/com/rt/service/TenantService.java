@@ -10,6 +10,7 @@ public interface TenantService {
 	    List<Tenant> getAllTenants();
 	    Tenant getTenantById(Long id);
 	    void deleteTenantById(Long id);
+		String assignBedToTenant(Tenant tenant);
 	
 
 }

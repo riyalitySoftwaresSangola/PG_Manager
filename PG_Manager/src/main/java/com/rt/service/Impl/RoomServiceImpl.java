@@ -25,11 +25,11 @@ public class RoomServiceImpl implements RoomService {
         return roomRepository.findLastRoomNumber();
     }
 
-	@Override
-	public Object getAllRooms() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<Room> getAllRooms() {
+        return roomRepository.findAll();
+    }
+
 
    
 }

@@ -48,4 +48,13 @@ public class TenantServiceImpl implements TenantService {
     public void deleteTenantById(Long id) {
         tenantRepository.deleteById(id);
     }
+
+
+	@Override
+	public String assignBedToTenant(Tenant tenant) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
+    
 }

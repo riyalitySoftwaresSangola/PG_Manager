@@ -29,6 +29,10 @@ public class Tenant {
 
     @Column(name = "emergency_contact")
     private String emergencyContact;
+    
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
 
 
 @DateTimeFormat(pattern = "yyyy-MM-dd")

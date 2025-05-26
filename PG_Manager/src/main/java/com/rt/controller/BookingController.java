@@ -28,5 +28,23 @@ public class BookingController {
     @Autowired
     private TenantService tenantService;
 
-    
+    @GetMapping("/assign-bed")
+    public String showAssignBedForm(Model model) {
+        model.addAttribute("tenant", new Tenant());
+        return "assign-bed"; // JSP page
+    }
+
+    @PostMapping("/assign-bed")
+    public String assignBed(@ModelAttribute("tenant") Tenant tenant, Model model) {
+        String message = tenantService.assignBedToTenant(tenant);
+        model.addAttribute("message", message);
+        return "assign-bed"; // JSP page showing success/failure
+    }
+
+    @GetMapping("/tenants")
+    public String viewAllTenants(Model model) {
+        model.addAttribute("tenants", tenantService.getAllTenants());
+        return "tenant-list"; // JSP page showing all tenants
+    }
 }
+

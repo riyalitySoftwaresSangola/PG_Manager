@@ -66,7 +66,7 @@ public class RoomController {
         return "roomManagementForm"; 
     }
 
-    @GetMapping("/Rooms	list")
+    @GetMapping("/Rooms list")
     public String listRooms(Model model) {
         model.addAttribute("rooms", roomService.getAllRooms());
         return "room-list";
