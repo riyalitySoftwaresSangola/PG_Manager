@@ -20,8 +20,6 @@ public class HomeConteroller {
 	
 	
 
-	// main admin pannal
-	
 	
 	@RequestMapping("/roomManagementForm")
 	public String roomManagementForm() {

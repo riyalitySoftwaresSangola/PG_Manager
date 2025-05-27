@@ -58,4 +58,9 @@ private LocalDate checkOutDate;
 
     @Column(name = "agreed_to_terms")
     private Boolean agreedToTerms;
+    
+    @OneToOne
+    @JoinColumn(name = "bed_assignment_id")
+    private BedAssignment bedAssignment;
+
 }
