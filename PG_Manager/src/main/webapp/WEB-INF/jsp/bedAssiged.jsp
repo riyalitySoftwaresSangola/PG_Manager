@@ -1,4 +1,11 @@
+
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <jsp:include page="modules/header.jsp"></jsp:include>
+
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="row">
 	<div class="col-lg-12 p-5">
@@ -20,7 +27,7 @@
 						<label class="form-label" for="roomId">Select Room</label> <select
 							class="form-select" id="roomId" name="roomId" required>
 							<option value="" disabled selected>Select a room</option>
-							<c:forEach var="room" items="${rooms}">
+							<c:forEach var="room" items="${Rooms}">
 								<option value="${room.id}">${room.roomNumber}</option>
 							</c:forEach>
 						</select>
@@ -47,9 +54,10 @@
 							Customer</label> <select class="form-select" id="customerId"
 							name="customerId" required>
 							<option value="" disabled selected>Select a customer</option>
-							<%-- Example dynamic customer data --%>
-							<option value="101">John Doe</option>
-							<option value="102">Jane Smith</option>
+							
+							<c:forEach var="customer" items="${customers}">
+								<option value="${customer.id}">${customer.fullName}</option>
+							</c:forEach>
 						</select>
 						<div class="invalid-feedback">Please select a customer.</div>
 					</div>
