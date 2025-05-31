@@ -20,8 +20,6 @@ public class HomeConteroller {
 	
 	
 
-	// main admin pannal
-	
 	
 	@RequestMapping("/roomManagementForm")
 	public String roomManagementForm() {
@@ -29,11 +27,11 @@ public class HomeConteroller {
 		
 	}
 	
-	@RequestMapping("/bedAssigned")
-	public String bedAssigedForm() {
-		
-		return "bedAssiged";
-	}
+	//@RequestMapping("/bedAssigned")
+	//public String bedAssigedForm() {
+		       
+	//	return "bedAssiged";
+	//}
 	
 	@GetMapping("/mealEntry")
 	public String mealEntryForm() {

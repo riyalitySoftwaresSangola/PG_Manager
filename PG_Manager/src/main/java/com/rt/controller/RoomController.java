@@ -18,8 +18,8 @@ public class RoomController {
 
     @GetMapping("/add")
     public String showAddRoomForm(Model model) {
-        // For the form, we don't bind Room but a helper object or just use @RequestParam
-        return "room-form";
+       
+        return "roomManagementForm";
     }
 
     @PostMapping("/addRooms")

@@ -30,9 +30,9 @@ public class Tenant {
     @Column(name = "emergency_contact")
     private String emergencyContact;
     
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    private Room room;
+//    @ManyToOne
+//    @JoinColumn(name = "room_id")
+//    private Room room;
 
 
 @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -58,4 +58,9 @@ private LocalDate checkOutDate;
 
     @Column(name = "agreed_to_terms")
     private Boolean agreedToTerms;
+    
+//    @OneToOne
+//    @JoinColumn(name = "bed_assignment_id")
+//    private BedAssignment bedAssignment;
+
 }
