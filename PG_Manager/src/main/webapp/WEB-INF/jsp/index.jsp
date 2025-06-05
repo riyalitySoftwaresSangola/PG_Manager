@@ -1,5 +1,30 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jsp:include page="modules/header.jsp"></jsp:include>
+
+<%
+    String userRole = (String) session.getAttribute("userRole");
+%>
+
+<c:choose>
+    <c:when test="${userRole == 'ADMIN'}">
+    
+          <jsp:include page="modules/header.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${userRole == 'MANAGER'}">
+     <h1 align="center">hi</h1>
+         <jsp:include page="modules/header.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${userRole == 'TENANT'}">
+     <h1 align="center">good </h1>
+         <jsp:include page="modules/header.jsp"></jsp:include>
+    </c:when>
+    <c:otherwise>
+        <p>You are not authorized to view this page.</p>
+    </c:otherwise>
+</c:choose>
+
+   
+<%-- <jsp:include page="modules/header.jsp"></jsp:include> --%>
 
   
                 <div class="row">
@@ -240,7 +265,7 @@
                                 </div> <!-- end card-->
                             </div> <!-- end col-->
                         </div> <!-- end row-->
-
+ 
                         <div class="row">
                             <div class="col-xxl-6">
                                 <div class="card">
