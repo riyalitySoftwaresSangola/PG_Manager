@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeConteroller {
 
-	@RequestMapping("/")
+	@RequestMapping("/admin/dashboard")
 	public String indexPage() {
         return "index" ;
 		

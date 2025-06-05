@@ -29,11 +29,11 @@ public class TenantController {
     private TenantService tenantService;
 
     
-    @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("tenant", new Tenant());
-        return "tenant_register";  // JSP file: tenant_register.jsp
-    }
+//    @GetMapping("/tenantRegister")
+//    public String showRegistrationForm(Model model) {
+//        model.addAttribute("tenant", new Tenant());
+//        return "tenant_register"; 
+//    }
 
     @PostMapping("/userRegistration")
     public String registerTenant(
