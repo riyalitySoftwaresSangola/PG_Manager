@@ -9,61 +9,61 @@ public class HomeConteroller {
 
 	@RequestMapping("/admin/dashboard")
 	public String indexPage() {
-        return "index" ;
-		
-	}
-	@RequestMapping("/customerRegistration")
-	public String createEvent() {
-        return "tenant" ;
-		
-	}
-	
-	
+		return "index";
 
-	
+	}
+
+//	@RequestMapping("/customerRegistration")
+//	public String createEvent() {
+//		return "tenant";
+//
+//	}
+
 	@RequestMapping("/roomManagementForm")
 	public String roomManagementForm() {
-        return "roomManagementForm" ;
-		
+		return "roomManagementForm";
+
 	}
-	
-	//@RequestMapping("/bedAssigned")
-	//public String bedAssigedForm() {
-		       
-	//	return "bedAssiged";
-	//}
-	
+
+	@RequestMapping("/UpdateTenant")
+	public String bedAssigedForm() {
+
+		return "Tenant/upadateTenant";
+	}
+
 	@GetMapping("/mealEntry")
 	public String mealEntryForm() {
-	    return "mealEntry";
+		return "mealEntry";
 	}
 
 	@RequestMapping("/billingForm")
 	public String billingForm() {
-		
+
 		return "billingForm";
 	}
-	
+
 	@RequestMapping("/paymentEntry")
 	public String paymentEntry() {
-		
+
 		return "paymentEntry";
 	}
-	
+
 	@RequestMapping("/complaints")
 	public String complaints() {
-		
+
 		return "complaints";
 	}
 	
+//	@RequestMapping("/allTenants")
+//	public String compdfdslaints() {
+//
+//		return "Tenant/tenantList";
+//	}
+
 	@RequestMapping("/leave")
 	public String leave() {
-		
+
 		return "leave";
 	}
-	
-	
-      
-	
 
 }

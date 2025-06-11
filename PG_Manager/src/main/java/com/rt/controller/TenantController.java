@@ -13,10 +13,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.util.List;
 
+import com.rt.dto.tenantDTO.TenantRequestDTO;
 import com.rt.entity.Tenant;
+import com.rt.entity.User;
 import com.rt.service.TenantService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import java.io.File;
@@ -29,27 +34,41 @@ public class TenantController {
     private TenantService tenantService;
 
     
-//    @GetMapping("/tenantRegister")
-//    public String showRegistrationForm(Model model) {
-//        model.addAttribute("tenant", new Tenant());
-//        return "tenant_register"; 
-//    }
+    @GetMapping("/tenantRegister")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("tenant", new Tenant());
+        return "Tenant/tenant"; 
+    }
 
     @PostMapping("/userRegistration")
     public String registerTenant(
             @ModelAttribute("tenant") @Valid Tenant tenant,
             BindingResult result,
             @RequestParam("idProof") MultipartFile idProofFile,
-            Model model) {
+            Model model,
+            HttpSession session) {
+    	
+    	
+    	try{
+    		
+    		User user =(User) session.getAttribute("loggedInUser");
+        	
+            tenant.setCreatedBy(user.getEmail());
 
-        System.out.println(tenant.getFullName());
-
-        // Optional: handle form validation errors
+            System.out.println(tenant.getFullName());
+    		
+    		
+    	}catch (Exception e) {
+            e.printStackTrace();
+           
+        }
+    	
+    	
         if (result.hasErrors()) {
         	System.out.print(result.getFieldError());
-            return "tenant";
+            return "Tenant/tenant";
         }
-
+      
         try {
             if (idProofFile != null && !idProofFile.isEmpty()) {
                
@@ -83,44 +102,46 @@ public class TenantController {
         } catch (IOException e) {
             e.printStackTrace();
             model.addAttribute("uploadError", "Failed to upload ID proof.");
-            return "tenant";
+            return "Tenant/tenant";
         }
   
         tenantService.saveTenant(tenant);
         model.addAttribute("successMessage", "Tenant registered successfully!");
-        return "tenant";
+        return "Tenant/tenant";
     }
 
 
-   @GetMapping("/list")
+   @GetMapping("/allTenants")
     public String listTenants(Model model) {
-        model.addAttribute("tenants", tenantService.getAllTenants());
-        return "tenant_list"; // JSP file: tenant_list.jsp
+	 List<Tenant>  Tenants =  tenantService.getAllTenants();
+        model.addAttribute("tenants", tenantService.convertToDTOList(Tenants));
+        return "Tenant/tenantList"; 
     }
 
    
-    @GetMapping("/edit/{id}")
-    public String editTenant(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/UpdateTenant")
+    public String editTenant(@RequestParam Long id, Model model) {
         Tenant tenant = tenantService.getTenantById(id);
         if (tenant == null) {
-            return "redirect:/tenant/list";
+            return "redirect:/allTenants";
         }
         model.addAttribute("tenant", tenant);
-        return "tenant_edit"; // JSP file: tenant_edit.jsp
+        return "Tenant/upadateTenant"; 
     }
 
    
     @PostMapping("/update")
     public String updateTenant(
-            @ModelAttribute("tenant") Tenant tenant,
+            @ModelAttribute("tenant") TenantRequestDTO dto,
             @RequestParam("idProof") MultipartFile idProofFile) {
+    	
 
         try {
             if (idProofFile != null && !idProofFile.isEmpty()) {
-                // Define folder to save the image
+              
                 String uploadDir = "uploads/idProofs/";
 
-                // Create folder if it doesn't exist
+                
                 File uploadFolder = new File(uploadDir);
                 if (!uploadFolder.exists()) {
                     uploadFolder.mkdirs();
@@ -134,21 +155,36 @@ public class TenantController {
                 }
                 String uniqueFileName = System.currentTimeMillis() + fileExtension;
 
-                // Save the file
+                
                 Path filePath = Paths.get(uploadDir, uniqueFileName);
                 Files.copy(idProofFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-                // Save file path to DB
-                tenant.setIdProofPath(uploadDir + uniqueFileName);
+                
+                dto.setIdProofPath(uploadDir + uniqueFileName);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        
 
-        // Save updated tenant
-        tenantService.saveTenant(tenant);
-        return "redirect:/tenant/list";
+   	 Tenant existingTenant = tenantService.getTenantById(dto.getTenantId());
+   	    
+   	 
+        existingTenant.setFullName(dto.getFullName());
+	    existingTenant.setEmail(dto.getEmail());
+	    existingTenant.setMobile(dto.getMobile());
+	    existingTenant.setGender(dto.getGender());
+	    existingTenant.setCheckInDate(dto.getCheckInDate());
+	    existingTenant.setStatus(dto.getStatus());
+	    existingTenant.setUpdatedBy(dto.getUpdatedBy());
+	    existingTenant.setUpdatedDate(LocalDateTime.now());
+	
+
+       
+        tenantService.saveTenant(existingTenant);
+        return "redirect:/allTenants";
     }
 
 
@@ -156,6 +192,6 @@ public class TenantController {
     @GetMapping("/delete/{id}")
     public String deleteTenant(@PathVariable("id") Long id) {
         tenantService.deleteTenantById(id);
-        return "redirect:/tenant/list";
+        return "redirect:/allTenants";
     }
 }

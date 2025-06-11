@@ -1,4 +1,4 @@
-<jsp:include page="modules/header.jsp"></jsp:include>
+<jsp:include page="../modules/header.jsp"></jsp:include>
 
 <div class="row">
 	<div class="col-lg-12 p-5">
@@ -142,4 +142,4 @@
 
 </div>
 
-<jsp:include page="modules/footer.jsp"></jsp:include>
+<jsp:include page="../modules/footer.jsp"></jsp:include>
