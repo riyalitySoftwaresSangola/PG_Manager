@@ -97,14 +97,14 @@
 					</a>
 						<div class="collapse" id="tenantManagement">
 							<ul class="sub-menu">
-								<li><a href="customerRegistration" class="side-nav-link">
+								<li><a href="tenantRegister" class="side-nav-link">
 										<span class="menu-icon ps-4"><i class="ti ti-user-plus"></i></span>
 										<span class="menu-text">Add Tenant</span>
 								</a></li>
-								<li><a href="updateTenant" class="side-nav-link"> <span
+								<!-- <li><a href="UpdateTenant" class="side-nav-link"> <span
 										class="menu-icon  ps-4"><i class="ti ti-pencil"></i></span> <span
 										class="menu-text">Update Tenant</span>
-								</a></li>
+								</a></li> -->
 								<li><a href="deleteTenant" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-trash"></i></span> <span
 										class="menu-text">Delete Tenant</span>

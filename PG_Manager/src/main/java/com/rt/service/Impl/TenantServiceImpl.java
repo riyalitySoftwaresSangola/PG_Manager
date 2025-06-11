@@ -1,5 +1,6 @@
 package com.rt.service.Impl;
 
+import com.rt.dto.tenantDTO.TenantResponseDTO;
 import com.rt.entity.Tenant;
 import com.rt.repository.TenantRepository;
 import com.rt.service.TenantService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TenantServiceImpl implements TenantService {
@@ -43,6 +45,29 @@ public class TenantServiceImpl implements TenantService {
     public List<Tenant> getAllTenants() {
         return tenantRepository.findAll();
     }
+    
+    @Override
+    public List<TenantResponseDTO> convertToDTOList(List<Tenant> tenants) {
+        return tenants.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    
+    
+    @Override
+    public TenantResponseDTO convertToDTO(Tenant tenant) {
+        return new TenantResponseDTO(
+            tenant.getId(),
+            tenant.getFullName(),
+            tenant.getEmail(),
+            tenant.getMobile(),
+            tenant.getGender(),
+            tenant.getCheckInDate(),
+            tenant.getStatus()
+        );
+    }
+
 
     @Override
     public void deleteTenantById(Long id) {

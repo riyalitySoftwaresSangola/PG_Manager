@@ -1,6 +1,8 @@
 package com.rt.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -62,5 +64,23 @@ private LocalDate checkOutDate;
 //    @OneToOne
 //    @JoinColumn(name = "bed_assignment_id")
 //    private BedAssignment bedAssignment;
+    
+    
+    
+    private String createdBy ;
+    
+    @Column(name = "created_date", updatable = false)
+    private LocalDateTime createdDate;
+    
+    
+    
+    @Column(name = "updated_by")
+    private String updatedBy;
 
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate;
+    
+    
+    
+    
 }
