@@ -43,25 +43,30 @@
 											class="ti ti-search position-absolute top-50 translate-middle-y ms-2"></i>
 									</div>
 								</div>
-								<div class="col-lg-4">
-									<div class="flex-grow-1 d-flex align-items-center">
-										<label for="status-select" class="me-2">Status</label>
 
-										<div class="flex-grow-1">
-											<select class="form-select my-1 my-md-0"
-												data-toggle="select2" id="status-select">
-												<option>Select</option>
-												<option value="Date">All</option>
-												<option value="Name">Cancelled</option>
-												<option value="Revenue">Completed</option>
-												<option value="Employee">Denied</option>
-												<option value="Employee">Pending</option>
-												<option value="Employee">Processing</option>
-												<option value="Employee">Refunded</option>
-											</select>
+								<div class="col-lg-4">
+									<form action="${pageContext.request.contextPath}/filterTenants"
+										method="get" id="statusForm">
+										<div class="flex-grow-1 d-flex align-items-center">
+											<label for="status-select" class="me-2">Status</label>
+
+											<div class="flex-grow-1">
+												<select class="form-select my-1 my-md-0" name="status"
+													onchange="document.getElementById('statusForm').submit();"
+													data-toggle="select2" id="status-select">
+													<option>Select</option>
+													<option value="Active"
+														${param.status == 'Active' ? 'selected' : ''}>Active</option>
+													<option value="Left"
+														${param.status == 'Left' ? 'selected' : ''}>Left</option>
+
+												</select>
+											</div>
 										</div>
-									</div>
+									</form>
 								</div>
+
+
 								<div class="col-lg-4">
 									<div class="input-group">
 										<input type="text" class="form-control"
@@ -88,10 +93,10 @@
 								</button>
 							</div>
 						</div>
-						
+
 					</div>
 				</div>
-				
+
 
 				<div class="table-responsive">
 					<table class="table table-nowrap mb-0">
@@ -107,7 +112,7 @@
 								<th>Action</th>
 							</tr>
 						</thead>
-						
+
 						<tbody>
 
 							<c:forEach var="tenant" items="${tenants}">
@@ -124,7 +129,7 @@
 											<a href="UpdateTenant?id=${tenant.tenantId}"
 												class="btn btn-soft-primary btn-icon btn-sm rounded-circle">
 												<i class="ti ti-eye"></i>
-											</a> <a href="javascript:void(0);"
+											</a> <a href="DeleteTenant?id=${tenant.tenantId}"
 												class="btn btn-soft-danger btn-icon btn-sm rounded-circle">
 												<i class="ti ti-trash"></i>
 											</a>
