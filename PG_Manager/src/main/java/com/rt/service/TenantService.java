@@ -14,6 +14,7 @@ public interface TenantService {
 		String assignBedToTenant(Tenant tenant);
 		TenantResponseDTO convertToDTO(Tenant tenant);
 		List<TenantResponseDTO> convertToDTOList(List<Tenant> tenants);
+		List<Tenant> getTenantsByStatus(String status);
 	
 
 }

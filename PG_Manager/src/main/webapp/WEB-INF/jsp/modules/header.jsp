@@ -105,10 +105,10 @@
 										class="menu-icon  ps-4"><i class="ti ti-pencil"></i></span> <span
 										class="menu-text">Update Tenant</span>
 								</a></li> -->
-								<li><a href="deleteTenant" class="side-nav-link"> <span
+								<!-- <li><a href="deleteTenant" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-trash"></i></span> <span
 										class="menu-text">Delete Tenant</span>
-								</a></li>
+								</a></li> -->
 								<li><a href="allTenants" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-list"></i></span> <span
 										class="menu-text">View All Tenants</span>

@@ -79,6 +79,8 @@ private LocalDate checkOutDate;
 
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
+
+	
     
     
     

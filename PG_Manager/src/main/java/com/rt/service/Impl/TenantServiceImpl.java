@@ -73,6 +73,11 @@ public class TenantServiceImpl implements TenantService {
     public void deleteTenantById(Long id) {
         tenantRepository.deleteById(id);
     }
+    
+    @Override
+    public List<Tenant> getTenantsByStatus(String status) {
+        return tenantRepository.findByStatus(status);
+    }
 
 
 	@Override
