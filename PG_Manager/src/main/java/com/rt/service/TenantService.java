@@ -11,10 +11,10 @@ public interface TenantService {
 	    List<Tenant> getAllTenants();
 	    Tenant getTenantById(Long id);
 	    void deleteTenantById(Long id);
-		String assignBedToTenant(Tenant tenant);
 		TenantResponseDTO convertToDTO(Tenant tenant);
 		List<TenantResponseDTO> convertToDTOList(List<Tenant> tenants);
 		List<Tenant> getTenantsByStatus(String status);
+		Tenant findById(Long tenantId);
 	
 
 }

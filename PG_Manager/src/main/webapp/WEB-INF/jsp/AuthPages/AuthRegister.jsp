@@ -64,20 +64,20 @@
 					<form action="register" method="post" class="text-start mb-3">
 						<div class="mb-3">
 							<label class="form-label" for="example-name">Your Name</label> <input
-								type="text" id="example-name" name="example-name"
+								type="text" id="example-name" name="username"
 								class="form-control" placeholder="Enter your name">
 						</div>
 
 						<div class="mb-3">
 							<label class="form-label" for="example-email">Email</label> <input
-								type="email" id="example-email" name="example-email"
+								type="email" id="example-email" name="email"
 								class="form-control" placeholder="Enter your email">
 						</div>
 
 						<div class="mb-3">
 							<label class="form-label" for="example-password">Password</label>
 							<input type="password" id="example-password"
-								name="examplePassword" class="form-control"
+								name="password" class="form-control"
 								placeholder="Enter your password">
 						</div>
 

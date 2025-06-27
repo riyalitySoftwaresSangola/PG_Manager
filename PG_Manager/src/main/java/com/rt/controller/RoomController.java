@@ -66,9 +66,19 @@ public class RoomController {
         return "roomManagementForm"; 
     }
 
-    @GetMapping("/Rooms list")
-    public String listRooms(Model model) {
-        model.addAttribute("rooms", roomService.getAllRooms());
-        return "room-list";
+
+   
+
+    @GetMapping("/allRooms")
+    public String showRoomsWithBeds(Model model) {
+        try {
+            List<Room> rooms = roomService.getAllRoomDetails();
+            model.addAttribute("rooms", rooms);
+        } catch (Exception e) {
+            System.err.println("Error fetching room details: " + e.getMessage());
+            model.addAttribute("error", "Failed to load room data.");
+        }
+        return "Rooms/viewRooms";
     }
+
 }

@@ -97,7 +97,7 @@
 					</a>
 						<div class="collapse" id="tenantManagement">
 							<ul class="sub-menu">
-								<li><a href="tenantRegister" class="side-nav-link">
+								<li><a href="${pageContext.request.contextPath}/tenantRegister" class="side-nav-link">
 										<span class="menu-icon ps-4"><i class="ti ti-user-plus"></i></span>
 										<span class="menu-text">Add Tenant</span>
 								</a></li>
@@ -109,7 +109,7 @@
 										class="menu-icon ps-4"><i class="ti ti-trash"></i></span> <span
 										class="menu-text">Delete Tenant</span>
 								</a></li> -->
-								<li><a href="allTenants" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/allTenants" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-list"></i></span> <span
 										class="menu-text">View All Tenants</span>
 								</a></li>
@@ -125,19 +125,12 @@
 					</a>
 						<div class="collapse" id="roomManagement">
 							<ul class="sub-menu">
-								<li><a href="roomManagementForm" class="side-nav-link">
+								<li><a href="${pageContext.request.contextPath}/roomManagementForm" class="side-nav-link">
 										<span class="menu-icon ps-4"><i class="ti ti-plus"></i></span> <span
 										class="menu-text">Add Room</span>
 								</a></li>
-								<li><a href="updateRoom" class="side-nav-link"> <span
-										class="menu-icon ps-4"><i class="ti ti-pencil"></i></span> <span
-										class="menu-text">Update Room</span>
-								</a></li>
-								<li><a href="deleteRoom" class="side-nav-link"> <span
-										class="menu-icon ps-4"><i class="ti ti-trash"></i></span> <span
-										class="menu-text">Delete Room</span>
-								</a></li>
-								<li><a href="allRooms" class="side-nav-link"> <span
+						
+								<li><a href="${pageContext.request.contextPath}/allRooms" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-list"></i></span> <span
 										class="menu-text">View All Rooms</span>
 								</a></li>
@@ -153,7 +146,7 @@
 					</a>
 						<div class="collapse" id="bedManagement">
 							<ul class="sub-menu">
-								<li><a href="bedAssigned" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/bedAssigned" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-user-check"></i></span> <span
 										class="menu-text">Assign Bed</span>
 								</a></li>
@@ -165,7 +158,7 @@
 										class="menu-icon ps-4"><i class="ti ti-trash"></i></span> <span
 										class="menu-text">Delete Bed</span>
 								</a></li>
-								<li><a href="allBeds" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/allBeds" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-list"></i></span> <span
 										class="menu-text">View All Beds</span>
 								</a></li>
@@ -181,15 +174,15 @@
 					</a>
 						<div class="collapse" id="mealManagement">
 							<ul class="sub-menu">
-								<li><a href="mealEntry" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/mealEntry" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-pencil"></i></span> <span
 										class="menu-text">Meal Entry</span>
 								</a></li>
-								<li><a href="updateMeal" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/updateMeal" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-edit"></i></span> <span
 										class="menu-text">Update Meal</span>
 								</a></li>
-								<li><a href="mealList" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/mealList" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-list"></i></span> <span
 										class="menu-text">View Meals</span>
 								</a></li>
@@ -206,15 +199,15 @@
 					</a>
 						<div class="collapse" id="billingPayment">
 							<ul class="sub-menu">
-								<li><a href="billingForm" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/billingForm" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-file-invoice"></i></span> <span
 										class="menu-text">Generate Bill</span>
 								</a></li>
-								<li><a href="paymentEntry" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/paymentEntry" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-credit-card"></i></span> <span
 										class="menu-text">Payment Entry</span>
 								</a></li>
-								<li><a href="billingHistory" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/billingHistory" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-history"></i></span> <span
 										class="menu-text">Billing History</span>
 								</a></li>
@@ -231,11 +224,11 @@
 					</a>
 						<div class="collapse" id="complaintLeave">
 							<ul class="sub-menu">
-								<li><a href="complaints" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/complaints" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-message-report"></i></span>
 										<span class="menu-text">Complaint Submission</span>
 								</a></li>
-								<li><a href="leave" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/leave" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-calendar"></i></span> <span
 										class="menu-text">Leave Request</span>
 								</a></li>
@@ -243,7 +236,7 @@
 						</div></li>
 
 					<!-- Logout -->
-					<li class="side-nav-item"><a href="logout"
+					<li class="side-nav-item"><a href="${pageContext.request.contextPath}/logout"
 						class="side-nav-link"> <span class="menu-icon"><i
 								class="ti ti-logout"></i></span> <span class="menu-text">Logout</span>
 					</a></li>

@@ -1,5 +1,8 @@
 package com.rt.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 import lombok.Data;
@@ -11,7 +14,7 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "room_id")
     private Long id;
 
     @Column(name = "room_number")
@@ -31,4 +34,7 @@ public class Room {
 
     @Column(name = "status")
     private String status;
+    
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<Bed> beds = new ArrayList<>();
 }
