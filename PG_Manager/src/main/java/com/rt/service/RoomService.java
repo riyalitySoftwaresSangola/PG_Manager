@@ -11,4 +11,6 @@ public interface RoomService {
     String getLastRoomNumber();
 
 	Object getAllRooms();
+
+	List<Room> getAllRoomDetails();
 }

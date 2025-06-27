@@ -126,10 +126,10 @@
 									<td>${tenant.status}</td>
 									<td class="pe-3">
 										<div class="hstack gap-1 justify-content-end">
-											<a href="${pageContext.request.contextPath}/UpdateTenant?id=${tenant.tenantId}"
+											<a href="UpdateTenant?id=${tenant.tenantId}"
 												class="btn btn-soft-primary btn-icon btn-sm rounded-circle">
 												<i class="ti ti-eye"></i>
-											</a> <a href="${pageContext.request.contextPath}/DeleteTenant?id=${tenant.tenantId}"
+											</a> <a href="DeleteTenant?id=${tenant.tenantId}"
 												class="btn btn-soft-danger btn-icon btn-sm rounded-circle">
 												<i class="ti ti-trash"></i>
 											</a>

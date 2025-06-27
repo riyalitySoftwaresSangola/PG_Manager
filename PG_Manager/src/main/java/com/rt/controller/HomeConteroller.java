@@ -24,6 +24,14 @@ public class HomeConteroller {
 		return "roomManagementForm";
 
 	}
+	
+//	@RequestMapping("/allRooms")
+//	public String viewRooms() {
+//		return "Rooms/viewRooms";
+//
+//	}
+	
+	
 
 	@RequestMapping("/UpdateTenant")
 	public String bedAssigedForm() {

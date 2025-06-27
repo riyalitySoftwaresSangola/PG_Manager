@@ -13,4 +13,9 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 	    String findLastRoomNumber();
 	  
 	  List<Room> findAll();
+	  
+	  
+//	  @Query("SELECT DISTINCT r FROM Room r LEFT JOIN FETCH r.beds b LEFT JOIN FETCH b.tenant")
+//	  List<Room> fetchRoomsWithBedsAndTenants();
+
 	}

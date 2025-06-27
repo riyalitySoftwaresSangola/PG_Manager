@@ -17,26 +17,30 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RegisterController {
 
-    private final UserService userService;
+	private final UserService userService;
 
-    @GetMapping("/register")
-    public String showRegisterForm(Model model) {
-        if (userService.isAdminRegistered()) {
-        	
-        	 model.addAttribute("user","Admin already present");
-            return "redirect:/login";
-        }
-        model.addAttribute("user", new User());
-        return "AuthPages/AuthRegister"; 
-    }
+	@GetMapping("/register")
+	public String showRegisterForm(Model model) {
+		if (userService.isAdminRegistered()) {
 
-    @PostMapping("/register")
-    public String handleAdminRegister(@ModelAttribute User user) {
-        if (!userService.isAdminRegistered()) {
-            userService.registerAdmin(user);
-        }
-        return "redirect:/login";
-    }
+			model.addAttribute("user", "Admin already present");
+			return "redirect:/login";
+		}
 
-  
+		model.addAttribute("user", new User());
+		return "AuthPages/AuthRegister";
+	}
+
+	@PostMapping("/register")
+	public String handleAdminRegister(@ModelAttribute User user) {
+
+		System.out.println(user.getEmail());
+		if (!userService.isAdminRegistered()) {
+			userService.registerAdmin(user);
+		} else {
+			throw new IllegalStateException("Admin is already registered.");
+		}
+		return "redirect:/login";
+	}
+
 }

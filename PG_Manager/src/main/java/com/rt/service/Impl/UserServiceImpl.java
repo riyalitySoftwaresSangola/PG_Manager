@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
 	    if (isAdminRegistered()) {
 	        throw new IllegalStateException("Admin is already registered.");
 	    }
+	    System.out.println("hello");
 
 	    Role adminRole = roleRepository.findByName(RoleType.ADMIN).orElse(null);
 	    if (adminRole == null) {

@@ -25,7 +25,7 @@ public class LoginController {
     public String showLoginForm() {
         return "AuthPages/AuthLogin"; 
     }
- 
+  
 
     @PostMapping("/login")
     public String login(@RequestParam("exampleEmail") String email,

@@ -1,7 +1,9 @@
 package com.rt.service.Impl;
 
 import com.rt.dto.tenantDTO.TenantResponseDTO;
+import com.rt.entity.Bed;
 import com.rt.entity.Tenant;
+import com.rt.repository.BedRepository;
 import com.rt.repository.TenantRepository;
 import com.rt.service.TenantService;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,6 +21,9 @@ public class TenantServiceImpl implements TenantService {
 
     @Autowired
     private TenantRepository tenantRepository;
+    
+    @Autowired
+    private BedRepository bedRepository;
 
     @Override
     public void saveTenant(Tenant tenant) {
@@ -30,6 +36,9 @@ public class TenantServiceImpl implements TenantService {
         if (tenant.getCheckOutDate() == null) {
             tenant.setCheckOutDate(tenant.getCheckInDate().plusMonths(1));
         }
+        
+        tenant.setCreatedDate(LocalDateTime.now());
+
 
         tenantRepository.save(tenant);
     }
@@ -40,6 +49,8 @@ public class TenantServiceImpl implements TenantService {
         Optional<Tenant> tenant = tenantRepository.findById(id);
         return tenant.orElse(null);
     }
+    
+    
 
     @Override
     public List<Tenant> getAllTenants() {
@@ -81,10 +92,16 @@ public class TenantServiceImpl implements TenantService {
 
 
 	@Override
-	public String assignBedToTenant(Tenant tenant) {
+	public Tenant findById(Long tenantId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+  
+
+
+	
     
     
 }
