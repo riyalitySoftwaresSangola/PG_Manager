@@ -1,8 +1,11 @@
 package com.rt.controller;
 
+import com.rt.dto.BedDTO;
 import com.rt.entity.Bed;
 import com.rt.entity.Room;
 import com.rt.entity.Tenant;
+import com.rt.repository.BedRepository;
+import com.rt.repository.RoomRepository;
 import com.rt.service.AssignmentService;
 import com.rt.service.RoomService;
 import com.rt.service.TenantService;
@@ -12,55 +15,55 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 @Controller
 public class BedAssignedController {
-	
-	
-	@Autowired
-	private RoomService roomService ;
-	
-	@Autowired
-	private TenantService tenantService ;
-	
-	@Autowired
-	private AssignmentService assignmentService ;
 
-	@RequestMapping("/bedAssigned")
-	public String bedAssigedForm(Model model) {
-		int id = 1;
-		model.addAttribute("Rooms", roomService.getAllRooms() );
-		
-	List<Tenant> list =	tenantService.getAllTenants();
-		
-		System.out.println(list.lastIndexOf(list));
-		model.addAttribute("customers", tenantService.getAllTenants()  );
-		
-		
-		return "bedAssiged";
+	@Autowired
+	private RoomService roomService;
+
+	@Autowired
+	private TenantService tenantService;
+
+	@Autowired
+	private BedRepository bedRepository;
+
+	@GetMapping("/bedAssigned")
+	public String bedAssignedForm(Model model) {
+		model.addAttribute("Rooms", roomService.getAllRooms());
+		model.addAttribute("customers", tenantService.getAllTenants());
+		return "bedAssigned"; // JSP name
 	}
-//	@PostMapping("/assign")
-//	public String assignBed(@RequestParam Long tenantId, @RequestParam Long bedId) {
-//	    Tenant tenant = tenantService.findById(tenantId);
-//	    Bed bed = bedService.findById(bedId);
-//
-//	    // Assign bed
-//	    bed.setOccupied(true);
-//	    tenant.setAssignedBed(bed);
-//	    tenant.setStatus("Active");
-//
-//	    tenantService.save(tenant);
-//	    bedService.save(bed);
-//
-//	    return "redirect:/beds/assign-form?success";
-//	}
-//
-//	@GetMapping("/available")
-//	@ResponseBody
-//	public List<Bed> getAvailableBeds(@RequestParam Long roomId) {
-//	    return bedService.findAvailableBedsByRoomId(roomId);
-//	}
 
-   
+	@PostMapping("/assignBed")
+	public String assignBed(@RequestParam Long tenantId,
+	                        @RequestParam Long roomId,
+	                        @RequestParam Long bedNumber) {
+
+		// Fetch tenant and bed
+		Tenant tenant = tenantService.findById(tenantId);
+		Bed bed = bedRepository.findById(bedNumber).orElse(null);
+
+		if (tenant != null && bed != null) {
+			bed.setStatus("Occupied");
+			tenant.setAssignedBed(bed);
+			tenant.setStatus("Active");
+
+			bedRepository.save(bed);
+			tenantService.save(tenant);
+		}
+		return "redirect:/bedAssigned";
+	}
+
+	@GetMapping("/getBedsByRoomId/{roomId}")
+	@ResponseBody
+	public List<BedDTO> getBedsByRoomId(@PathVariable Long roomId) {
+		List<Bed> beds = bedRepository.findByRoomId(roomId);
+		return beds.stream().map(BedDTO::new).collect(Collectors.toList());
+	}
 }

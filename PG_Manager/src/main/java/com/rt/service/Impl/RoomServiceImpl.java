@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -31,7 +32,7 @@ public class RoomServiceImpl implements RoomService {
 
             int bedCount = getBedCountByRoomType(room.getRoomType());
 
-            for (int i = 0; i < bedCount; i++) {
+            for (int i = 1; i <= bedCount; i++) {
                 Bed bed = new Bed();
                 bed.setBedNumber("Bed" + i);
                 bed.setBedType("Single");
@@ -67,11 +68,27 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<Room> getAllRoomDetails() {
         try {
-            return roomRepository.findAll(); 
+            
+        List<Room>	list = roomRepository.findAll(); 
+        System.out.println(list.get(1));
+        	return list ;
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch room data from DB", e);
         }
     }
+
+	@Override
+	public Room findById(long roomId) {
+		Optional<Room> ExistingRoom = roomRepository.findById(roomId);
+		System.out.println(ExistingRoom);
+		Room room = null ;
+//		if(ExistingRoom.isPresent()) {
+//			room = ExistingRoom.get();
+//			System.out.println(room);
+//		}
+		
+		return null;
+	}
 
 
 
