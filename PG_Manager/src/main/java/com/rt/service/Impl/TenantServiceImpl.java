@@ -2,8 +2,10 @@ package com.rt.service.Impl;
 
 import com.rt.dto.tenantDTO.TenantResponseDTO;
 import com.rt.entity.Bed;
+import com.rt.entity.Room;
 import com.rt.entity.Tenant;
 import com.rt.repository.BedRepository;
+import com.rt.repository.RoomRepository;
 import com.rt.repository.TenantRepository;
 import com.rt.service.TenantService;
 
@@ -21,6 +23,10 @@ public class TenantServiceImpl implements TenantService {
 
     @Autowired
     private TenantRepository tenantRepository;
+    
+    @Autowired
+    private RoomRepository roomRepository;
+    
     
     @Autowired
     private BedRepository bedRepository;
@@ -93,13 +99,43 @@ public class TenantServiceImpl implements TenantService {
 
 	@Override
 	public Tenant findById(Long tenantId) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Tenant> ExistingTenant = tenantRepository.findById(tenantId);
+		Tenant tenant = null;
+		if(ExistingTenant.isPresent()) {
+			
+			 tenant = ExistingTenant.get();
+			 System.out.println("data : = > "+ tenant );
+		}
+		return tenant;
 	}
 
 
   
+	
 
+
+	@Override
+	public Room AssignedBedToTenant(Long tenantId, Long roomId, Long bedId) {
+		Tenant tenant = findById(bedId);
+//		Optional<Bed> ExistingBed =bedRepository.findById(bedId);
+		  
+		
+		 
+//		if(ExistingBed.isPresent()) {
+//			
+//			 System.out.println("data : = > "+  ExistingBed.get());
+//			 
+//			
+//		}
+			return null;
+	}
+
+
+	@Override
+	public void save(Tenant tenant) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
     
