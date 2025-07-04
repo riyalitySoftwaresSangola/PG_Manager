@@ -93,8 +93,8 @@ public class TenantServiceImpl implements TenantService {
 
 	@Override
 	public Tenant findById(Long tenantId) {
-		// TODO Auto-generated method stub
-		return null;
+		 Optional<Tenant> tenant = tenantRepository.findById(tenantId);
+	        return tenant.orElse(null);
 	}
 
 

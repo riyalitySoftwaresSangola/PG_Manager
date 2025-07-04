@@ -39,10 +39,10 @@ public class HomeConteroller {
 		return "Tenant/upadateTenant";
 	}
 
-	@GetMapping("/mealEntry")
-	public String mealEntryForm() {
-		return "mealEntry";
-	}
+//	@GetMapping("/mealEntry")
+//	public String mealEntryForm() {
+//		return "MealManagement/mealEntry";
+//	}
 
 	@RequestMapping("/billingForm")
 	public String billingForm() {

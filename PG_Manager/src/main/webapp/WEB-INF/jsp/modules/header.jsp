@@ -174,7 +174,7 @@
 					</a>
 						<div class="collapse" id="mealManagement">
 							<ul class="sub-menu">
-								<li><a href="${pageContext.request.contextPath}/mealEntry" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/addMeal" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-pencil"></i></span> <span
 										class="menu-text">Meal Entry</span>
 								</a></li>
@@ -182,7 +182,7 @@
 										class="menu-icon ps-4"><i class="ti ti-edit"></i></span> <span
 										class="menu-text">Update Meal</span>
 								</a></li>
-								<li><a href="${pageContext.request.contextPath}/mealList" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/viewMeals" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-list"></i></span> <span
 										class="menu-text">View Meals</span>
 								</a></li>
