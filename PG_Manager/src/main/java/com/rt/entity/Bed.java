@@ -16,9 +16,9 @@ public class Bed {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bedId;
 
-    private String bedNumber;    // ➕ Added
-    private String bedType;      // e.g., Single, Double
-    private String status;       // e.g., Available, Occupied
+    private String bedNumber;   
+    private String bedType;     
+    private String status;       
 
     @ManyToOne
     @JoinColumn(name = "room_id")
@@ -26,6 +26,9 @@ public class Bed {
 
     @OneToOne(mappedBy = "assignedBed")
     private Tenant tenant;
+
+    
+
 
 	
 }

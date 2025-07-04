@@ -9,13 +9,12 @@ import com.rt.entity.Room;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-	  @Query(value = "SELECT room_number FROM rooms ORDER BY CAST(room_number AS UNSIGNED) DESC LIMIT 1", nativeQuery = true)
-	    String findLastRoomNumber();
-	  
-	  List<Room> findAll();
-	  
-	  
-//	  @Query("SELECT DISTINCT r FROM Room r LEFT JOIN FETCH r.beds b LEFT JOIN FETCH b.tenant")
-//	  List<Room> fetchRoomsWithBedsAndTenants();
+	@Query(value = "SELECT room_number FROM rooms ORDER BY CAST(room_number AS UNSIGNED) DESC LIMIT 1", nativeQuery = true)
+	String findLastRoomNumber();
 
-	}
+	List<Room> findAll();
+
+	@Query(value = "select * from room r join bed b on r.room_id=b.room_id", nativeQuery = true)
+	List<Room> findAllBedsWithRooms();
+
+}

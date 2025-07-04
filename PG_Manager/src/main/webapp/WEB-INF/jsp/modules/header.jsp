@@ -1,4 +1,5 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -121,13 +122,17 @@
 						href="#roomManagement" role="button" aria-expanded="false"
 						aria-controls="roomManagement" class="side-nav-link"> <span
 							class="menu-icon"><i class="ti ti-home"></i></span> <span
-							class="menu-text">Room Management</span> <span class="menu-arrow"></span>
+							class="menu-text">Room & Bed Management</span> <span class="menu-arrow"></span>
 					</a>
 						<div class="collapse" id="roomManagement">
 							<ul class="sub-menu">
 								<li><a href="${pageContext.request.contextPath}/roomManagementForm" class="side-nav-link">
 										<span class="menu-icon ps-4"><i class="ti ti-plus"></i></span> <span
 										class="menu-text">Add Room</span>
+								</a></li>
+								<li><a href="${pageContext.request.contextPath}/bedAssigned" class="side-nav-link"> <span
+										class="menu-icon ps-4"><i class="ti ti-bed"></i></span> <span
+										class="menu-text">Assign Bed</span>
 								</a></li>
 						
 								<li><a href="${pageContext.request.contextPath}/allRooms" class="side-nav-link"> <span
@@ -138,7 +143,7 @@
 						</div></li>
 
 					<!-- Bed Management -->
-					<li class="side-nav-item"><a data-bs-toggle="collapse"
+					<%-- <li class="side-nav-item"><a data-bs-toggle="collapse"
 						href="#bedManagement" role="button" aria-expanded="false"
 						aria-controls="bedManagement" class="side-nav-link"> <span
 							class="menu-icon"><i class="ti ti-bed"></i></span> <span
@@ -164,7 +169,7 @@
 								</a></li>
 							</ul>
 						</div></li>
-
+ --%>
 					<!-- Meal Management -->
 					<li class="side-nav-item"><a data-bs-toggle="collapse"
 						href="#mealManagement" role="button" aria-expanded="false"
@@ -294,7 +299,7 @@
 						class="topbar-search text-muted d-none d-xl-flex gap-2 align-items-center"
 						data-bs-toggle="modal" data-bs-target="#searchModal" type="button">
 						<i class="ti ti-search fs-18"></i> <span class="me-2">Search
-							something..</span> <span class="ms-auto fw-medium">⌘K</span>
+							something..</span> <span class="ms-auto fw-medium">âK</span>
 					</div>
 
 					<!-- Mega Menu Dropdown -->
@@ -620,7 +625,7 @@
 										<iconify-icon icon="line-md:bell-twotone-alert-loop"
 											class="fs-80 text-secondary mt-2"></iconify-icon>
 										<h4 class="fw-semibold mb-0 fst-italic lh-base mt-3">
-											Hey! 👋 <br />You have no any notifications
+											Hey! ð <br />You have no any notifications
 										</h4>
 									</div>
 								</div>
