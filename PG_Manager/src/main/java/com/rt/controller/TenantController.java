@@ -16,7 +16,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.rt.dto.tenantDTO.TenantRequestDTO;
+import com.rt.dto.requestDTO.TenantRequestDTO;
 import com.rt.entity.Tenant;
 import com.rt.entity.User;
 import com.rt.service.TenantService;

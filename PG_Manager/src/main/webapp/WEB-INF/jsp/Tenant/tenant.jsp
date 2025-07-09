@@ -1,4 +1,4 @@
-<jsp:include page="../modules/header.jsp"></jsp:include>
+<jsp:include page="../modules/header.jsp" />
 
 <div class="row">
 	<div class="col-lg-12 p-5">

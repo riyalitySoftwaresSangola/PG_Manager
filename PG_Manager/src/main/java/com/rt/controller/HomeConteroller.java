@@ -56,11 +56,11 @@ public class HomeConteroller {
 		return "paymentEntry";
 	}
 
-	@RequestMapping("/complaints")
-	public String complaints() {
-
-		return "complaints";
-	}
+//	@RequestMapping("/complaints")
+//	public String complaints() {
+//
+//		return "ComplaintAndLeaveManagement/complaint";
+//	}
 	
 //	@RequestMapping("/allTenants")
 //	public String compdfdslaints() {
@@ -71,7 +71,7 @@ public class HomeConteroller {
 	@RequestMapping("/leave")
 	public String leave() {
 
-		return "leave";
+		return "ComplaintAndLeaveManagement/leave";
 	}
 
 }

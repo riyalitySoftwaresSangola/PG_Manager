@@ -229,10 +229,17 @@
 					</a>
 						<div class="collapse" id="complaintLeave">
 							<ul class="sub-menu">
-								<li><a href="${pageContext.request.contextPath}/complaints" class="side-nav-link"> <span
+								<li><a href="${pageContext.request.contextPath}/complaintsForm" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-message-report"></i></span>
 										<span class="menu-text">Complaint Submission</span>
 								</a></li>
+								
+								<li><a href="${pageContext.request.contextPath}/viewComplentList" class="side-nav-link"> <span
+										class="menu-icon ps-4"><i class="ti ti-list"></i></span> <span
+										class="menu-text">View All Tenants</span>
+								</a></li>
+								
+								
 								<li><a href="${pageContext.request.contextPath}/leave" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-calendar"></i></span> <span
 										class="menu-text">Leave Request</span>
