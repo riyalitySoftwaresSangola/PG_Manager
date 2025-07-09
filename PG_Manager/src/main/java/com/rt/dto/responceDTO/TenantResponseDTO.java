@@ -1,47 +1,33 @@
-package com.rt.dto.tenantDTO;
+package com.rt.dto.responceDTO;
+
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-public class TenantRequestDTO {
-
-	private Long tenantId;
+public class TenantResponseDTO {
+    private Long tenantId;
     private String fullName;
     private String email;
     private String mobile;
     private String gender;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkInDate;
     private String status;
-    private String updatedBy; 
+
     
-    private String idProofPath;
+    public TenantResponseDTO() {}
 
-    public TenantRequestDTO() {
-		super();
-	}
+    public TenantResponseDTO(Long tenantId, String fullName, String email, String mobile,
+                             String gender, LocalDate checkInDate, String status) {
+        this.tenantId = tenantId;
+        this.fullName = fullName;
+        this.email = email;
+        this.mobile = mobile;
+        this.gender = gender;
+        this.checkInDate = checkInDate;
+        this.status = status;
+    }
 
-	
-    public TenantRequestDTO(Long tenantId, String fullName, String email, String mobile, String gender,
-			LocalDate checkInDate, String status, String updatedBy, String idProofPath) {
-		super();
-		this.tenantId = tenantId;
-		this.fullName = fullName;
-		this.email = email;
-		this.mobile = mobile;
-		this.gender = gender;
-		this.checkInDate = checkInDate;
-		this.status = status;
-		this.updatedBy = updatedBy;
-		this.idProofPath = idProofPath;
-	}
-
-
-
-	public Long getTenantId() {
+   
+    public Long getTenantId() {
         return tenantId;
     }
 
@@ -96,23 +82,4 @@ public class TenantRequestDTO {
     public void setStatus(String status) {
         this.status = status;
     }
-
-	
-	public String getIdProofPath() {
-		return idProofPath;
-	}
-
-	public void setIdProofPath(String idProofPath) {
-		this.idProofPath = idProofPath;
-	}
-
-	
-
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
 }

@@ -82,3 +82,16 @@ CREATE TABLE `meals` (
   KEY `tenant_id` (`tenant_id`),
   CONSTRAINT `meals_ibfk_1` FOREIGN KEY (`tenant_id`) REFERENCES `tenants` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `complaint` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `tenant_id` bigint(20) NOT NULL,
+  `createdDate` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_complaint_tenant` (`tenant_id`),
+  CONSTRAINT `fk_complaint_tenant` FOREIGN KEY (`tenant_id`) REFERENCES `tenants` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;

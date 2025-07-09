@@ -1,6 +1,6 @@
 package com.rt.service.Impl;
 
-import com.rt.dto.tenantDTO.TenantResponseDTO;
+import com.rt.dto.responceDTO.TenantResponseDTO;
 import com.rt.entity.Bed;
 import com.rt.entity.Room;
 import com.rt.entity.Tenant;
