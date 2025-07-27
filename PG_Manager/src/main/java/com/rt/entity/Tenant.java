@@ -116,6 +116,15 @@ public class Tenant {
 		super();
 	}
 
+	
+
+	public Tenant orElseThrow(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 
 	
 
