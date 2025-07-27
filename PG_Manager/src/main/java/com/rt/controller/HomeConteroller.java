@@ -19,11 +19,12 @@ public class HomeConteroller {
 //
 //	}
 
-	@RequestMapping("/roomManagementForm")
-	public String roomManagementForm() {
-		return "roomManagementForm";
-
-	}
+	/*
+	 * @RequestMapping("/roomManagementForm") public String roomManagementForm() {
+	 * return "roomManagementForm";
+	 * 
+	 * }
+	 */
 	
 //	@RequestMapping("/allRooms")
 //	public String viewRooms() {

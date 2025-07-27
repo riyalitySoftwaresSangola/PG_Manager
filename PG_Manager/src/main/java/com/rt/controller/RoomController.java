@@ -16,11 +16,17 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
-    @GetMapping("/add")
-    public String showAddRoomForm(Model model) {
-       
-        return "roomManagementForm";
-    }
+//    @GetMapping("/add")
+//    public String showAddRoomForm(Model model) {
+//       
+//        return "Rooms/roomManagementForm";
+//    }
+    
+    @RequestMapping("/roomManagementForm")
+	public String roomManagementForm() {
+		return "Rooms/roomManagementForm";
+
+	}
 
     @PostMapping("/addRooms")
     public String addRooms(
@@ -63,7 +69,7 @@ public class RoomController {
 
         roomService.saveAll(rooms);
 
-        return "roomManagementForm"; 
+        return "Rooms/roomManagementForm"; 
     }
 
 
