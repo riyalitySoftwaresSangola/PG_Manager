@@ -236,7 +236,7 @@
 								
 								<li><a href="${pageContext.request.contextPath}/viewComplentList" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-list"></i></span> <span
-										class="menu-text">View All Tenants</span>
+										class="menu-text">View Complaints</span>
 								</a></li>
 								
 								
