@@ -1,18 +1,29 @@
 package com.rt.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rt.entity.Meal;
 import com.rt.entity.Tenant;
+import com.rt.entity.User;
 import com.rt.repository.MealRepository;
 import com.rt.service.MealService;
 import com.rt.service.TenantService;
@@ -62,6 +73,60 @@ public class MealController {
         mealService.saveMeal(meal);
         return "redirect:/addMeal?success";
     }
+    
+    @GetMapping("/api/meal/{id}")
+    @ResponseBody
+    public Map<String, Object> getMealDetails(@PathVariable Long id) {
+        Meal meal = mealRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Meal not found"));
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", meal.getId());
+        response.put("mealDate", meal.getMealDate().toString());
+        response.put("breakfast", meal.isBreakfast());
+        response.put("lunch", meal.isLunch());
+        response.put("dinner", meal.isDinner());
+        response.put("tenantName", meal.getTenant().getFullName()); 
+
+        return response;
+    }
+
+
+    
+
+    @PostMapping("/updateMeal")
+    public String updateMeal(
+    		@RequestParam Long mealId, 
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate mealDate,
+            @RequestParam(required = false) List<String> meals,
+            HttpSession session,
+            Model model) {
+
+        Meal meal = mealService.findById(mealId);
+        if (meal == null) {
+            model.addAttribute("error", "Meal not found.");
+            return "errorPage"; 
+        }
+  
+        meal.setMealDate(mealDate);
+        meal.setBreakfast(meals != null && meals.contains("Breakfast"));
+        meal.setLunch(meals != null && meals.contains("Lunch"));
+        meal.setDinner(meals != null && meals.contains("Dinner"));
+
+        try {
+            User user = (User) session.getAttribute("loggedInUser");
+            meal.setUpdatedBy(user != null ? user.getUsername() : "System");
+            meal.setUpdatedDate(LocalDateTime.now());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mealService.saveMeal(meal);
+        model.addAttribute("message", "Meal updated successfully.");
+
+        return "redirect:/viewMeals"; 
+    }
+
 
     @GetMapping("/viewMeals")
     public String viewMeals(Model model) {
