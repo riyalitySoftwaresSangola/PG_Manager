@@ -6,7 +6,6 @@ import com.rt.entity.Room;
 import com.rt.entity.Tenant;
 import com.rt.repository.BedRepository;
 import com.rt.repository.RoomRepository;
-import com.rt.service.AssignmentService;
 import com.rt.service.BedService;
 import com.rt.service.RoomService;
 import com.rt.service.TenantService;
@@ -62,6 +61,8 @@ public class BedAssignedController {
 	                        @RequestParam("bedNumber") Long bedId,
 	                        RedirectAttributes redirectAttributes) {
 	    try {
+	    	
+	    	bedAssignedService.assignBedToTenant(tenantId, roomId, bedId);
 	      
 	        Tenant tenant = tenantService.findById(tenantId);
 	        Bed bed = bedRepository.findById(bedId)
@@ -77,7 +78,7 @@ public class BedAssignedController {
 	        }
 
 	       
-	        bedAssignedService.assignBedToTenant(tenantId, roomId, bedId);
+//	        bedAssignedService.assignBedToTenant(tenantId, roomId, bedId);
 	        redirectAttributes.addFlashAttribute("successMessage", "✅ Bed assigned successfully!");
 
 	    } catch (RuntimeException e) {
