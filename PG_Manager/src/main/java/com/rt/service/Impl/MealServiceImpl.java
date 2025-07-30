@@ -3,6 +3,7 @@ package com.rt.service.Impl;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,4 +39,10 @@ public class MealServiceImpl implements MealService {
         LocalDate end = month.atEndOfMonth();
         return mealRepository.findByTenantIdAndMealDateBetween(tenantId, start, end);
     }
+
+    @Override
+    public Meal findById(Long mealId) {
+        return mealRepository.findById(mealId).orElse(null);
+    }
+
 }
