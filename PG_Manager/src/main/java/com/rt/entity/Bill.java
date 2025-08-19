@@ -1,33 +1,54 @@
 package com.rt.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "bills")
 public class Bill {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	  @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Long id;
 
-    private Long customerId;
+	    @NotNull(message = "Customer ID is required")
+	    private Long customerId;
 
-    private String billingMonth;
+	    @NotBlank(message = "Billing month is required")
+	    private String billingMonth;
 
-    private Double rent;
+	    @NotNull(message = "Rent is required")
+	    @PositiveOrZero(message = "Rent must be 0 or more")
+	    private Double rent;
 
-    private Double mealCharges;
+	    @NotNull(message = "Meal charges are required")
+	    @PositiveOrZero(message = "Meal charges must be 0 or more")
+	    private Double mealCharges;
 
-    private Double electricityCharges;
+	    @NotNull(message = "Electricity charges are required")
+	    @PositiveOrZero(message = "Electricity charges must be 0 or more")
+	    private Double electricityCharges;
 
-    private Double otherCharges;
+	    @NotNull(message = "Other charges are required")
+	    @PositiveOrZero(message = "Other charges must be 0 or more")
+	    private Double otherCharges;
 
-    private Double totalAmount;
+	    @NotNull(message = "Total amount is required")
+	    @PositiveOrZero(message = "Total amount must be 0 or more")
+	    private Double totalAmount;
 
-    private String status;
+	    @NotBlank(message = "Status is required")
+	    private String status;
 
-    private LocalDate generatedDate;
+	    @NotNull(message = "Generated date is required")
+	    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	    private LocalDate generatedDate;
 
     public Bill() {
     }

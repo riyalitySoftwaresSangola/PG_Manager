@@ -34,27 +34,27 @@ public class HomeConteroller {
 	
 	
 
-	@RequestMapping("/UpdateTenant")
-	public String bedAssigedForm() {
+//	@RequestMapping("/UpdateTenant")
+//	public String bedAssigedForm() {
+//
+//		return "Tenant/upadateTenant";
+//	}
 
-		return "Tenant/upadateTenant";
-	}
+//	@GetMapping("/mealEntry")
+//	public String mealEntryForm() {
+//		return "mealEntry";
+//	}
 
-	@GetMapping("/mealEntry")
-	public String mealEntryForm() {
-		return "mealEntry";
-	}
-
-	@RequestMapping("/billingForm")
-	public String billingForm() {
-
-		return "billingForm";
-	}
+//	@RequestMapping("/billingForm")
+//	public String billingForm() {
+//
+//		return "BillingAndPayment/billingForm";
+//	}
 
 	@RequestMapping("/paymentEntry")
 	public String paymentEntry() {
 
-		return "paymentEntry";
+		return "BillingAndPayment/paymentEntry";
 	}
 
 //	@RequestMapping("/complaints")
