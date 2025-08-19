@@ -17,5 +17,9 @@ public interface BedAssignedRepository extends JpaRepository<BedAssigned, Long> 
 
     @Query("SELECT b FROM BedAssigned b WHERE b.bed.bedId = :bedId AND b.status = :status")
     List<BedAssigned> findByBed_BedIdAndStatus(@Param("bedId") Long bedId, @Param("status") String status);
+    
+    
+    List<BedAssigned> findByTenantId(Long tenantId);
+
 }
 
