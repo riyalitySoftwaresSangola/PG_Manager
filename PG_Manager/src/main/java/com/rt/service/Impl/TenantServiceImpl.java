@@ -137,6 +137,18 @@ public class TenantServiceImpl implements TenantService {
 		
 	}
 
+
+	@Override
+	public List<Tenant> findTenantsByMonth(int year, int monthValue) {
+	    LocalDate startDate = LocalDate.of(year, monthValue, 1);
+	    LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+
+	    return tenantRepository.findByCheckInDateBetween(startDate, endDate);
+	}
+
+
+	
+
 	
     
     

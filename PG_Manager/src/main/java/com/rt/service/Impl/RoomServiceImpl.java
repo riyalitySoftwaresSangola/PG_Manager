@@ -9,6 +9,7 @@ import com.rt.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +24,44 @@ public class RoomServiceImpl implements RoomService {
     private BedRepository bedRepository;
     
     
+//    @Override
+//    public void saveAll(List<Room> rooms) {
+////        roomRepository.saveAll(rooms);
+//    	
+//    	  List<Room> savedRooms = new ArrayList<>();
+//        
+//        for (Room room : rooms) {
+//            Room savedRoom = roomRepository.save(room);
+//
+//            int bedCount = getBedCountByRoomType(room.getRoomType());
+//
+//            for (int i = 1; i <= bedCount; i++) {
+//                Bed bed = new Bed();
+//                bed.setBedNumber("Bed" + i);
+//                bed.setBedType("Single");
+//                bed.setStatus("Available");
+//                bed.setRoom(savedRoom);  
+//                
+//                bedRepository.save(bed);
+//                
+//                savedRooms.add(savedRoom);
+//            }
+//        }
+//        
+//        
+//    }
+    
+    
     @Override
-    public void saveAll(List<Room> rooms) {
-//        roomRepository.saveAll(rooms);
-        
+    public List<Room> saveAll(List<Room> rooms) {
+        List<Room> savedRooms = new ArrayList<>();
+
         for (Room room : rooms) {
+         
             Room savedRoom = roomRepository.save(room);
+
+           
+            List<Bed> beds = new ArrayList<>();
 
             int bedCount = getBedCountByRoomType(room.getRoomType());
 
@@ -37,13 +70,22 @@ public class RoomServiceImpl implements RoomService {
                 bed.setBedNumber("Bed" + i);
                 bed.setBedType("Single");
                 bed.setStatus("Available");
-                bed.setRoom(savedRoom);  
-                bedRepository.save(bed);
+                bed.setRoom(savedRoom);
+
+                Bed savedBed = bedRepository.save(bed);
+                beds.add(savedBed);
             }
+
+
+            savedRoom.setBeds(beds);
+
+            savedRooms.add(savedRoom);
         }
-        
-        
+
+        return savedRooms;
     }
+
+
 
     private int getBedCountByRoomType(String type) {
         switch (type.toLowerCase()) {

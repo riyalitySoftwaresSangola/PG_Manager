@@ -20,6 +20,7 @@ public interface TenantService {
 		Tenant findById(Long tenantId);
 		Room AssignedBedToTenant(Long tenantId, Long roomId, Long bedId);
 		void save(Tenant tenant);
+		List<Tenant> findTenantsByMonth(int year, int monthValue);
 	
 
 }

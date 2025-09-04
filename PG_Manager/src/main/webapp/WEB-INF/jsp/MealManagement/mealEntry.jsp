@@ -4,6 +4,28 @@
 
 <div class="row">
     <div class="col-lg-12 p-5">
+    
+    	<div class="position-fixed top-0 my-5 end-0 p-3"
+			style="z-index: 1100;">
+			<c:if test="${not empty successMessage}">
+				<div class="alert alert-success alert-dismissible fade show shadow"
+					role="alert">
+					${successMessage}
+					<button type="button" class="btn-close" data-bs-dismiss="alert"
+						aria-label="Close"></button>
+				</div>
+			</c:if>
+
+			<c:if test="${not empty errorMessage}">
+				<div class="alert alert-danger alert-dismissible fade show shadow"
+					role="alert">
+					${errorMessage}
+					<button type="button" class="btn-close" data-bs-dismiss="alert"
+						aria-label="Close"></button>
+				</div>
+			</c:if>
+		</div>
+    
         <div class="card">
             <div class="card-header border-bottom border-dashed d-flex align-items-center">
                 <h4 class="header-title">Daily Meal Entry</h4>
@@ -56,5 +78,17 @@
         </div>
     </div>
 </div>
+
+
+<script>
+ 
+  setTimeout(() => {
+    let alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+      let bsAlert = new bootstrap.Alert(alert);
+      bsAlert.close();
+    });
+  }, 3000); 
+</script>
 
 <jsp:include page="../modules/footer.jsp"></jsp:include>
