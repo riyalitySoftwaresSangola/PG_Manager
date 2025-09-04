@@ -3,6 +3,7 @@ package com.rt.repository;
 import com.rt.entity.Bed;
 import com.rt.entity.Tenant;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Repository;
 public interface TenantRepository extends JpaRepository<Tenant, Long> {
 	
 	List<Tenant> findByStatus(String status);
+
+	List<Tenant> findByCheckInDateBetween(LocalDate startDate, LocalDate endDate);
 	
 	
 

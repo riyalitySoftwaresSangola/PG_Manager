@@ -1,22 +1,40 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="../modules/header.jsp" />
+
+
 
 <div class="row">
 	<div class="col-lg-12 p-5">
+	<!-- Alert container at top-right -->
+<div class="position-fixed top-0 my-5 end-0 p-3" style="z-index: 1100;">
+	<c:if test="${not empty successMessage}">
+		<div class="alert alert-success alert-dismissible fade show shadow"
+			role="alert">
+			${successMessage}
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+	</c:if>
+
+	<c:if test="${not empty errorMessage}">
+		<div class="alert alert-danger alert-dismissible fade show shadow"
+			role="alert">
+			${errorMessage}
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+	</c:if>
+</div>
 		<div class="card">
 			<div
 				class="card-header border-bottom border-dashed d-flex align-items-center">
 				<h4 class="header-title">Tenant Registration</h4>
 			</div>
 
-			<%-- Success message block --%>
-			<c:if test="${not empty successMessage}">
-				<div style="color: green; font-weight: bold; margin-bottom: 10px;">
-					${successMessage}</div>
-			</c:if>
-
 			<div class="card-body">
 				<p class="text-muted">Please fill in the details below to
 					register as a tenant.</p>
+
 				<form class="needs-validation" action="userRegistration"
 					method="post" enctype="multipart/form-data" novalidate>
 
@@ -76,7 +94,7 @@
 							number.</div>
 					</div>
 
-					<!-- Emergency Contact Number -->
+					<!-- Emergency Contact -->
 					<div class="mb-3">
 						<label class="form-label" for="emergencyContact">Emergency
 							Contact Number</label> <input type="tel" class="form-control"
@@ -89,11 +107,12 @@
 					<!-- Check-in Date -->
 					<div class="mb-3">
 						<label class="form-label" for="checkInDate">Check-in Date</label>
-						<input type="date" name="checkInDate" class="form-control" required/> 
+						<input type="date" name="checkInDate" class="form-control"
+							required />
 						<div class="invalid-feedback">Please select a check-in date.</div>
 					</div>
 
-					<!-- Check-out Date (Optional) -->
+					<!-- Check-out Date -->
 					<div class="mb-3">
 						<label class="form-label" for="checkOutDate">Check-out
 							Date (Optional)</label> <input type="date" class="form-control"
@@ -119,12 +138,12 @@
 						</select>
 					</div>
 
-					<!-- Terms and Conditions -->
+					<!-- Terms -->
 					<div class="mb-3">
 						<div class="form-check">
 							<input type="checkbox" class="form-check-input" id="termsCheck"
 								required> <label class="form-check-label form-label"
-								for="termsCheck">I agree to the terms and conditions</label>
+								for="termsCheck"> I agree to the terms and conditions </label>
 							<div class="invalid-feedback">You must agree before
 								submitting.</div>
 						</div>
@@ -135,11 +154,21 @@
 			</div>
 		</div>
 	</div>
-
-
-
-	<img src="/uploads/idProofs/${tenant.idProofPath}" alt="ID Proof" />
-
 </div>
+
+<!-- ID Proof Preview -->
+<c:if test="${not empty tenant.idProofPath}">
+	<img src="/uploads/idProofs/${tenant.idProofPath}" alt="ID Proof" />
+</c:if>
+
+<!-- Auto close alerts after 4 sec -->
+<script>
+    setTimeout(() => {
+        document.querySelectorAll('.alert').forEach(alert => {
+            let bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        });
+    }, 4000);
+</script>
 
 <jsp:include page="../modules/footer.jsp"></jsp:include>

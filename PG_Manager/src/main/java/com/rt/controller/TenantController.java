@@ -87,7 +87,7 @@ public class TenantController {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			model.addAttribute("uploadError", "Failed to upload ID proof.");
+			model.addAttribute("errorMessage", "Failed to upload ID proof.");
 			return "Tenant/tenant";
 		}
 
@@ -98,8 +98,6 @@ public class TenantController {
 
 	@GetMapping("/allTenants")
 	public String listTenants(Model model) {
-		
-		
 		
 		List<Tenant> Tenants = tenantService.getTenantsByStatus("Active");
 		model.addAttribute("tenants", tenantService.convertToDTOList(Tenants));
@@ -118,7 +116,7 @@ public class TenantController {
 
 	@PostMapping("/update")
 	public String updateTenant(@ModelAttribute("tenant") TenantRequestDTO dto,
-			@RequestParam("idProof") MultipartFile idProofFile, HttpSession session) {
+			@RequestParam("idProof") MultipartFile idProofFile, HttpSession session,Model model) {
 
 		try {
 			if (idProofFile != null && !idProofFile.isEmpty()) {
@@ -172,6 +170,7 @@ public class TenantController {
 		}
 
 		tenantService.saveTenant(existingTenant);
+		model.addAttribute("successMessage", "Tenant registered successfully!");
 		return "redirect:/allTenants";
 	}
 	
@@ -187,6 +186,30 @@ public class TenantController {
 
 		model.addAttribute("tenants", tenantService.convertToDTOList(tenants));
 	    return "Tenant/tenantList";
+	}
+
+	
+	
+	 // Filter tenants by month
+	@GetMapping("/filterTenantsByMonth")
+	public String filterTenantsByMonth(@RequestParam("month") String month, Model model) {
+	    // month format will be "YYYY-MM" (e.g., "2025-08")
+	    try {
+	        // Split year and month
+	        String[] parts = month.split("-");
+	        int year = Integer.parseInt(parts[0]);
+	        int monthValue = Integer.parseInt(parts[1]);
+
+	        // Call service layer to fetch tenants by month
+	        List<Tenant> tenants = tenantService.findTenantsByMonth(year, monthValue);
+System.out.println(tenants.isEmpty());
+	        model.addAttribute("tenants", tenantService.convertToDTOList(tenants));
+	        model.addAttribute("selectedMonth", month);
+	    } catch (Exception e) {
+	        model.addAttribute("errorMessage", "Invalid month format!");
+	    }
+
+	    return "Tenant/tenantList"; 
 	}
 
 

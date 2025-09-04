@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,8 @@ public class RoomController {
             @RequestParam("monthlyRent") double monthlyRent,
             @RequestParam(value = "acAvailable", required = false) boolean acAvailable,
             @RequestParam(value = "attachedBathroom", required = false) boolean attachedBathroom,
-            @RequestParam("status") String status) {
+            @RequestParam("status") String status,
+            Model model) {
 
        
         List<Room> rooms = new ArrayList<>();
@@ -67,7 +69,22 @@ public class RoomController {
             rooms.add(room);
         }
 
-        roomService.saveAll(rooms);
+       
+        
+        try {
+            List<Room> savedRooms = roomService.saveAll(rooms);
+
+            int totalBeds = savedRooms.stream()
+                    .mapToInt(r -> r.getBeds() != null ? r.getBeds().size() : 0)
+                    .sum();
+
+            model.addAttribute("successMessage",
+                    roomCount + " rooms added successfully with  " + totalBeds + " beds.");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage",
+                    "Failed to add rooms: " + e.getMessage());
+        }
+
 
         return "Rooms/roomManagementForm"; 
     }

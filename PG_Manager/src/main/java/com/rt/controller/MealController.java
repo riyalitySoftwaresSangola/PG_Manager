@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.rt.entity.Meal;
 import com.rt.entity.Tenant;
@@ -31,120 +32,124 @@ import com.rt.service.TenantService;
 @Controller
 public class MealController {
 
-    @Autowired
-    private MealService mealService;
+	@Autowired
+	private MealService mealService;
 
-    @Autowired
-    private TenantService tenantService;
-    
+	@Autowired
+	private TenantService tenantService;
 
-    @Autowired
-    private MealRepository mealRepository;
+	@Autowired
+	private MealRepository mealRepository;
 
+	@GetMapping("/addMeal")
+	public String showMealForm(Model model,
+			@RequestParam(value = "successMessage", required = false) String successMessage,
+			@RequestParam(value = "errorMessage", required = false) String errorMessage) {
+		model.addAttribute("tenants", tenantService.getAllTenants());
 
-    @GetMapping("/addMeal")
-    public String showMealForm(Model model) {
-        model.addAttribute("tenants", tenantService.getAllTenants());
-        return "MealManagement/mealEntry";
-    }
+		if (successMessage != null) {
+			model.addAttribute("successMessage", successMessage);
+		}
+		if (errorMessage != null) {
+			model.addAttribute("errorMessage", errorMessage);
+		}
+		return "MealManagement/mealEntry";
+	}
 
-    @PostMapping("/saveMealEntry")
-    public String saveMealEntry(
-            @RequestParam("customerId") Long tenantId,
-            @RequestParam("mealDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate mealDate,
-            @RequestParam(value = "meals", required = false) List<String> meals
-    ) {
-        System.out.println("Tenant ID: " + tenantId);
-        System.out.println("Meal Date Received: " + mealDate);
+	@PostMapping("/saveMealEntry")
+	public String saveMealEntry(@RequestParam("customerId") Long tenantId,
+			@RequestParam("mealDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate mealDate,
+			@RequestParam(value = "meals", required = false) List<String> meals,
+			RedirectAttributes redirectAttributes) {
+		try {
+			Tenant tenant = tenantService.findById(tenantId);
+			if (tenant == null) {
+				redirectAttributes.addAttribute("errorMessage", "❌ Tenant not found with ID: " + tenantId);
+				return "redirect:/addMeal";
+			}
 
-        Tenant tenant = tenantService.findById(tenantId);
-        if (tenant == null) {
-            throw new RuntimeException("Tenant not found with ID: " + tenantId);
-        }
+			Meal meal = new Meal();
+			meal.setMealDate(mealDate);
+			meal.setTenant(tenant);
+			meal.setBreakfast(meals != null && meals.contains("Breakfast"));
+			meal.setLunch(meals != null && meals.contains("Lunch"));
+			meal.setDinner(meals != null && meals.contains("Dinner"));
 
-        Meal meal = new Meal();
-        meal.setMealDate(mealDate);
-        meal.setTenant(tenant);
+			mealService.saveMeal(meal);
 
-        meal.setBreakfast(meals != null && meals.contains("Breakfast"));
-        meal.setLunch(meals != null && meals.contains("Lunch"));
-        meal.setDinner(meals != null && meals.contains("Dinner"));
+			redirectAttributes.addAttribute("successMessage",
+					"✅ Meal entry saved successfully for " + tenant.getFullName() + " on " + mealDate);
+			return "redirect:/addMeal";
 
-        mealService.saveMeal(meal);
-        return "redirect:/addMeal?success";
-    }
-    
-    @GetMapping("/api/meal/{id}")
-    @ResponseBody
-    public Map<String, Object> getMealDetails(@PathVariable Long id) {
-        Meal meal = mealRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Meal not found"));
+		} catch (Exception e) {
+			redirectAttributes.addAttribute("errorMessage", "⚠️ Failed to save meal entry: " + e.getMessage());
+			return "redirect:/addMeal";
+		}
+	}
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", meal.getId());
-        response.put("mealDate", meal.getMealDate().toString());
-        response.put("breakfast", meal.isBreakfast());
-        response.put("lunch", meal.isLunch());
-        response.put("dinner", meal.isDinner());
-        response.put("tenantName", meal.getTenant().getFullName()); 
+	@GetMapping("/api/meal/{id}")
+	@ResponseBody
+	public Map<String, Object> getMealDetails(@PathVariable Long id) {
+		Meal meal = mealRepository.findById(id).orElseThrow(() -> new RuntimeException("Meal not found"));
 
-        return response;
-    }
+		Map<String, Object> response = new HashMap<>();
+		response.put("id", meal.getId());
+		response.put("mealDate", meal.getMealDate().toString());
+		response.put("breakfast", meal.isBreakfast());
+		response.put("lunch", meal.isLunch());
+		response.put("dinner", meal.isDinner());
+		response.put("tenantName", meal.getTenant().getFullName());
 
+		return response;
+	}
 
-    
+	@PostMapping("/updateMeal")
+	public String updateMeal(@RequestParam Long mealId,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate mealDate,
+			@RequestParam(required = false) List<String> meals, HttpSession session, Model model) {
 
-    @PostMapping("/updateMeal")
-    public String updateMeal(
-    		@RequestParam Long mealId, 
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate mealDate,
-            @RequestParam(required = false) List<String> meals,
-            HttpSession session,
-            Model model) {
+		Meal meal = mealService.findById(mealId);
+		if (meal == null) {
+			model.addAttribute("error", "Meal not found.");
+			return "errorPage";
+		}
 
-        Meal meal = mealService.findById(mealId);
-        if (meal == null) {
-            model.addAttribute("error", "Meal not found.");
-            return "errorPage"; 
-        }
-  
-        meal.setMealDate(mealDate);
-        meal.setBreakfast(meals != null && meals.contains("Breakfast"));
-        meal.setLunch(meals != null && meals.contains("Lunch"));
-        meal.setDinner(meals != null && meals.contains("Dinner"));
+		meal.setMealDate(mealDate);
+		meal.setBreakfast(meals != null && meals.contains("Breakfast"));
+		meal.setLunch(meals != null && meals.contains("Lunch"));
+		meal.setDinner(meals != null && meals.contains("Dinner"));
 
-        try {
-            User user = (User) session.getAttribute("loggedInUser");
-            meal.setUpdatedBy(user != null ? user.getUsername() : "System");
-            meal.setUpdatedDate(LocalDateTime.now());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		try {
+			User user = (User) session.getAttribute("loggedInUser");
+			meal.setUpdatedBy(user != null ? user.getUsername() : "System");
+			meal.setUpdatedDate(LocalDateTime.now());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        mealService.saveMeal(meal);
-        model.addAttribute("message", "Meal updated successfully.");
+		mealService.saveMeal(meal);
+		model.addAttribute("message", "Meal updated successfully.");
 
-        return "redirect:/viewMeals"; 
-    }
+		return "redirect:/viewMeals";
+	}
 
-
-    @GetMapping("/viewMeals")
-    public String viewMeals(Model model) {
+	@GetMapping("/viewMeals")
+	public String viewMeals(Model model) {
 //        model.addAttribute("meals", mealService.getMealsByDate(LocalDate.now()));
-           model.addAttribute("meals", mealRepository.findAll() );
+		model.addAttribute("meals", mealRepository.findAll());
 
-        return "MealManagement/viewMeals";
-    }
-    
-    
-    @GetMapping("/viewMeal")
-    public String viewMeals(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                            Model model) {
-        if (date == null) {
-            date = LocalDate.now(); 
-        }
-        model.addAttribute("meals", mealService.getMealsByDate(date));
-        model.addAttribute("selectedDate", date); 
-        return "MealManagement/viewMeals";
-    }
+		return "MealManagement/viewMeals";
+	}
+
+	@GetMapping("/viewMeal")
+	public String viewMeals(
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+			Model model) {
+		if (date == null) {
+			date = LocalDate.now();
+		}
+		model.addAttribute("meals", mealService.getMealsByDate(date));
+		model.addAttribute("selectedDate", date);
+		return "MealManagement/viewMeals";
+	}
 }

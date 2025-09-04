@@ -136,11 +136,7 @@
 											onclick="openMealEditModal(${meal.id})">
 											<i class="ti ti-eye"></i>
 										</button>
-										<a
-											href="${pageContext.request.contextPath}/DeleteTenant?id=${tenant.tenantId}"
-											class="btn btn-soft-danger btn-icon btn-sm rounded-circle">
-											<i class="ti ti-trash"></i>
-										</a>
+										
 									</div>
 								</td>
 							</tr>

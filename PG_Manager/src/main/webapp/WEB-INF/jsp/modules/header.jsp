@@ -183,10 +183,10 @@
 										class="menu-icon ps-4"><i class="ti ti-pencil"></i></span> <span
 										class="menu-text">Meal Entry</span>
 								</a></li>
-								<li><a href="${pageContext.request.contextPath}/updateMeal" class="side-nav-link"> <span
+								<%-- <li><a href="${pageContext.request.contextPath}/updateMeal" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-edit"></i></span> <span
 										class="menu-text">Update Meal</span>
-								</a></li>
+								</a></li> --%>
 								<li><a href="${pageContext.request.contextPath}/viewMeals" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-list"></i></span> <span
 										class="menu-text">View Meals</span>
