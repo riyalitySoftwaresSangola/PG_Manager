@@ -119,19 +119,77 @@ public class RoomServiceImpl implements RoomService {
         }
     }
 
-	@Override
-	public Room findById(long roomId) {
-		Optional<Room> ExistingRoom = roomRepository.findById(roomId);
-		System.out.println(ExistingRoom);
-		Room room = null ;
-//		if(ExistingRoom.isPresent()) {
-//			room = ExistingRoom.get();
-//			System.out.println(room);
-//		}
-		
-		return null;
-	}
+    @Override
+    public Room findById(long roomId) {
+        return roomRepository.findById(roomId)
+                .orElseThrow(() -> new RuntimeException("Room not found with ID: " + roomId));
+    }
 
+    @Override
+    public List<Room> getRoomsByStatus(String status) {
+        return roomRepository.findByStatus(status);
+    }
+
+
+    @Override
+    public Room updateRoomWithBeds(Room updatedRoom) {
+       
+        Room existingRoom = roomRepository.findById(updatedRoom.getId())
+                .orElseThrow(() -> new RuntimeException("Room not found with id: " + updatedRoom.getId()));
+
+       
+        existingRoom.setRoomNumber(updatedRoom.getRoomNumber());
+        existingRoom.setRoomType(updatedRoom.getRoomType());
+        existingRoom.setMonthlyRent(updatedRoom.getMonthlyRent());
+        existingRoom.setAcAvailable(updatedRoom.isAcAvailable());
+        existingRoom.setAttachedBathroom(updatedRoom.isAttachedBathroom());
+        existingRoom.setStatus(updatedRoom.getStatus());
+
+        Room savedRoom = roomRepository.save(existingRoom);
+
+       
+        List<Bed> existingBeds = bedRepository.findByRoomId(savedRoom.getId());
+
+     
+        int requiredBedCount = getBedCountByRoomType(savedRoom.getRoomType());
+
+      
+        if (requiredBedCount > existingBeds.size()) {
+            for (int i = existingBeds.size() + 1; i <= requiredBedCount; i++) {
+                Bed bed = new Bed();
+                bed.setBedNumber("Bed" + i);
+                bed.setBedType("Single");
+                bed.setStatus("Available");
+                bed.setRoom(savedRoom);
+                bedRepository.save(bed);
+            }
+        }
+
+        
+        else if (requiredBedCount < existingBeds.size()) {
+            List<Bed> extraBeds = existingBeds.subList(requiredBedCount, existingBeds.size());
+            bedRepository.deleteAll(extraBeds);
+        }
+
+        
+        for (int i = 0; i < Math.min(requiredBedCount, existingBeds.size()); i++) {
+            Bed bed = existingBeds.get(i);
+            bed.setBedNumber("Bed" + (i + 1));
+            bed.setRoom(savedRoom);
+            bedRepository.save(bed);
+        }
+
+       
+        List<Bed> updatedBeds = bedRepository.findByRoomId(savedRoom.getId());
+        savedRoom.setBeds(updatedBeds);
+
+        return savedRoom;
+    }
+
+    @Override
+    public Room save(Room room) {
+        return roomRepository.save(room);
+    }
 
 
    

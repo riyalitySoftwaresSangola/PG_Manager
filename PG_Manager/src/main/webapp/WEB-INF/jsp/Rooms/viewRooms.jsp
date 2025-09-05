@@ -39,7 +39,7 @@
 							</div>
 
 							<div class="col-lg-4">
-								<form action="${pageContext.request.contextPath}/filterTenants"
+								<form action="${pageContext.request.contextPath}/filterRooms"
 									method="get" id="statusForm">
 									<div class="flex-grow-1 d-flex align-items-center">
 										<label for="status-select" class="me-2">Status</label>
@@ -60,7 +60,7 @@
 							</div>
 
 
-							<div class="col-lg-4">
+							<!-- <div class="col-lg-4">
 								<div class="input-group">
 									<input type="text" class="form-control"
 										data-provider="flatpickr" data-deafult-date="01 May to 31 May"
@@ -69,7 +69,7 @@
 										<i class="ti ti-calendar fs-15"></i>
 									</span>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 
@@ -152,10 +152,10 @@
 								
 								<td class="pe-3">
 										<div class="hstack gap-1 justify-content-end">
-											<a href="${pageContext.request.contextPath}/UpdateTenant?id=${tenant.tenantId}"
+											<a href="${pageContext.request.contextPath}/UpdateRoom?id=${room.id}"
 												class="btn btn-soft-primary btn-icon btn-sm rounded-circle">
 												<i class="ti ti-eye"></i>
-											</a> <a href="${pageContext.request.contextPath}/DeleteTenant?id=${tenant.tenantId}"
+											</a> <a href="${pageContext.request.contextPath}/toggleRoomStatus?id=${room.id}"
 												class="btn btn-soft-danger btn-icon btn-sm rounded-circle">
 												<i class="ti ti-trash"></i>
 											</a>

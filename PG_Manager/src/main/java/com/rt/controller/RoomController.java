@@ -1,6 +1,7 @@
 package com.rt.controller;
 
 import com.rt.entity.Room;
+import com.rt.entity.Tenant;
 import com.rt.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -89,14 +90,175 @@ public class RoomController {
         return "Rooms/roomManagementForm"; 
     }
 
+    @GetMapping("/UpdateRoom")
+    public String showUpdateRoomForm(@RequestParam("id") Long roomId, Model model) {
+
+        Room room = roomService.findById(roomId);
+
+        if (room == null) {
+            
+            model.addAttribute("errorMessage", "Room not found with ID: " + roomId);
+            return "Rooms/viewRooms"; 
+        }
+
+        model.addAttribute("room", room);
+
+        return "Rooms/updateRoom"; 
+    }
+    
+    
+    
+//    @PostMapping("/updateRoom")
+//    public String updateRoom(
+//            @RequestParam("roomId") Long roomId,
+//            @RequestParam("roomNumber") String roomNumber,
+//            @RequestParam("roomType") String roomType,
+//            @RequestParam("monthlyRent") Double monthlyRent,
+//            @RequestParam(value = "acAvailable", required = false) String acAvailable,
+//            @RequestParam(value = "attachedBathroom", required = false) String attachedBathroom,
+//            @RequestParam("status") String status,
+//            RedirectAttributes redirectAttributes) {
+//
+//       
+//        Room existingRoom = roomService.findById(roomId);
+//        if (existingRoom == null) {
+//            redirectAttributes.addFlashAttribute("errorMessage", "Room not found!");
+//            return "redirect:/rooms";
+//        }
+//
+//       
+//        existingRoom.setRoomNumber(roomNumber);
+//        existingRoom.setRoomType(roomType);
+//        existingRoom.setMonthlyRent(monthlyRent);
+//        existingRoom.setAcAvailable(acAvailable != null);
+//        existingRoom.setAttachedBathroom(attachedBathroom != null);
+//        existingRoom.setStatus(status);
+//
+//     
+//        roomService.updateRoomWithBeds(existingRoom);
+//
+//       
+//        redirectAttributes.addFlashAttribute("successMessage", "Room updated successfully!");
+//
+//        return "redirect:/allRooms";
+//    }
+
+    
+    @PostMapping("/updateRoom")
+    public String updateRoom(
+            @RequestParam("roomId") Long roomId,
+            @RequestParam("roomNumber") String roomNumber,
+            @RequestParam("roomType") String roomType,
+            @RequestParam("monthlyRent") Double monthlyRent,
+            @RequestParam(value = "acAvailable", required = false) String acAvailable,
+            @RequestParam(value = "attachedBathroom", required = false) String attachedBathroom,
+            @RequestParam("status") String status,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            Room existingRoom = roomService.findById(roomId);
+            if (existingRoom == null) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Room not found!");
+                return "redirect:/rooms";
+            }
+
+         
+            existingRoom.setRoomNumber(roomNumber);
+            existingRoom.setRoomType(roomType);
+            existingRoom.setMonthlyRent(monthlyRent);
+            existingRoom.setAcAvailable(acAvailable != null);
+            existingRoom.setAttachedBathroom(attachedBathroom != null);
+            existingRoom.setStatus(status);
+
+           
+            roomService.updateRoomWithBeds(existingRoom);
+
+            redirectAttributes.addFlashAttribute("successMessage", "Room updated successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error updating room: " + e.getMessage());
+        }
+
+        return "redirect:/allRooms";
+    }
+
+
+    @GetMapping("/roomsByStatus")
+    public String showRoomsByStatus(@RequestParam("status") String status, Model model) {
+        try {
+         
+            List<Room> rooms = roomService.getRoomsByStatus(status);
+            model.addAttribute("rooms", rooms);
+            model.addAttribute("selectedStatus", status); 
+        } catch (Exception e) {
+            System.err.println("Error fetching room details: " + e.getMessage());
+            model.addAttribute("error", "Failed to load room data.");
+        }
+        return "Rooms/viewRooms";
+    }
+
+    @GetMapping("/DeleteRoom")
+    public String deleteRoom(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
+        Room existingRoom = roomService.findById(id);
+
+        if (existingRoom == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Room not found with ID: " + id);
+            return "redirect:/allRooms";
+        }
+
+      
+        existingRoom.setStatus("Left");
+        roomService.save(existingRoom);
+
+        redirectAttributes.addFlashAttribute("successMessage", "Room status changed to 'Left' successfully!");
+        return "redirect:/allRooms";
+    }
+    
+    @GetMapping("/toggleRoomStatus")
+    public String toggleRoomStatus(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
+        Room existingRoom = roomService.findById(id);
+
+        if (existingRoom == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Room not found with ID: " + id);
+            return "redirect:/allRooms";
+        }
+
+        
+        if ("Active".equalsIgnoreCase(existingRoom.getStatus())) {
+            existingRoom.setStatus("Left");
+            redirectAttributes.addFlashAttribute("successMessage", "Room status changed to 'Left' successfully!");
+        } else {
+            existingRoom.setStatus("Active");
+            redirectAttributes.addFlashAttribute("successMessage", "Room status changed to 'Active' successfully!");
+        }
+
+        roomService.save(existingRoom);
+
+        return "redirect:/allRooms";
+    }
+    
+    @GetMapping("/filterRooms")
+    public String filterRooms(@RequestParam(value = "status", required = false) String status, Model model) {
+        List<Room> rooms;
+
+        if (status != null && !status.isEmpty()) {
+            rooms = roomService.getRoomsByStatus(status);
+        } else {
+            rooms = (List<Room>) roomService.getAllRooms(); 
+        }
+
+        model.addAttribute("rooms", rooms);
+        return "Rooms/viewRooms";  // make sure you have a JSP for listing rooms
+    }
+
+
 
    
 
     @GetMapping("/allRooms")
     public String showRoomsWithBeds(Model model) {
         try {
-            List<Room> rooms = roomService.getAllRoomDetails();
-            model.addAttribute("rooms", rooms);
+        	 List<Room> activeRooms = roomService.getRoomsByStatus("Active");
+            model.addAttribute("rooms", activeRooms);
         } catch (Exception e) {
             System.err.println("Error fetching room details: " + e.getMessage());
             model.addAttribute("error", "Failed to load room data.");

@@ -17,4 +17,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 	@Query(value = "select * from room r join bed b on r.room_id=b.room_id", nativeQuery = true)
 	List<Room> findAllBedsWithRooms();
 
+	List<Room> findByStatus(String status);
+
 }
