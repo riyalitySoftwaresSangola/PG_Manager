@@ -244,6 +244,11 @@
 										class="menu-icon ps-4"><i class="ti ti-calendar"></i></span> <span
 										class="menu-text">Leave Request</span>
 								</a></li>
+								
+								<li><a href="${pageContext.request.contextPath}/all" class="side-nav-link"> <span
+										class="menu-icon ps-4"><i class="ti ti-calendar"></i></span> <span
+										class="menu-text">Leave list</span>
+								</a></li>
 							</ul>
 						</div></li>
 

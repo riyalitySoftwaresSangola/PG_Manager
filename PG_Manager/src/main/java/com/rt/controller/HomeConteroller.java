@@ -68,11 +68,11 @@ public class HomeConteroller {
 //
 //		return "Tenant/tenantList";
 //	}
-
-	@RequestMapping("/leave")
-	public String leave() {
-
-		return "ComplaintAndLeaveManagement/leave";
-	}
+//
+//	@RequestMapping("/leave")
+//	public String leave() {
+//
+//		return "ComplaintAndLeaveManagement/leave";
+//	}
 
 }
