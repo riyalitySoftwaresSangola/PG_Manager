@@ -41,7 +41,7 @@
 					<!-- Room Number -->
 					<div class="mb-3">
 						<label class="form-label" for="roomNumber">Number of Room
-						</label> <input type="text" class="form-control" name="roomCount"
+						</label> <input type="number" class="form-control" name="roomCount"
 							id="roomNumber" placeholder="Enter room number" required>
 						<div class="invalid-feedback">Please enter a room number.</div>
 					</div>

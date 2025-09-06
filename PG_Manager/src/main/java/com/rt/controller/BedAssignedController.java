@@ -39,7 +39,7 @@ public class BedAssignedController {
 
 	@GetMapping("/bedAssigned")
 	public String bedAssignedForm(Model model) {
-		model.addAttribute("Rooms", roomService.getAllRooms());
+		model.addAttribute("Rooms",  roomService.getRoomsByStatus("Active"));
 		model.addAttribute("customers", tenantService.getAllTenants());
 		return "Rooms/bedAssigned"; 
 	}

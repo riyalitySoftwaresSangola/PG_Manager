@@ -37,7 +37,11 @@
 	type="text/css" />
 
 
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css" rel="stylesheet"/>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 
@@ -102,14 +106,7 @@
 										<span class="menu-icon ps-4"><i class="ti ti-user-plus"></i></span>
 										<span class="menu-text">Add Tenant</span>
 								</a></li>
-								<!-- <li><a href="UpdateTenant" class="side-nav-link"> <span
-										class="menu-icon  ps-4"><i class="ti ti-pencil"></i></span> <span
-										class="menu-text">Update Tenant</span>
-								</a></li> -->
-								<!-- <li><a href="deleteTenant" class="side-nav-link"> <span
-										class="menu-icon ps-4"><i class="ti ti-trash"></i></span> <span
-										class="menu-text">Delete Tenant</span>
-								</a></li> -->
+								
 								<li><a href="${pageContext.request.contextPath}/allTenants" class="side-nav-link"> <span
 										class="menu-icon ps-4"><i class="ti ti-list"></i></span> <span
 										class="menu-text">View All Tenants</span>

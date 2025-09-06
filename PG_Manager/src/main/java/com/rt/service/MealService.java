@@ -14,5 +14,6 @@ public interface MealService {
     List<Meal> getMealsForMonth(Long tenantId, YearMonth month);
 	
 	Meal findById(Long mealId);
+	List<Meal> getMealsByMonth(int month, int year);
 	
 }
