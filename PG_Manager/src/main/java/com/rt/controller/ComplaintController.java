@@ -26,7 +26,7 @@ public class ComplaintController {
 
     @GetMapping("/complaintsForm")
     public String showComplaintForm(Model model) {
-        List<Tenant> tenants = tenantService.getAllTenants();
+        List<Tenant> tenants = tenantService.getTenantsByStatus("Active");
         model.addAttribute("tenants", tenants);
         return "ComplaintAndLeaveManagement/complaint";
     }

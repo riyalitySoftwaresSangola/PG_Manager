@@ -2,6 +2,7 @@ package com.rt.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class MealController {
 	public String showMealForm(Model model,
 			@RequestParam(value = "successMessage", required = false) String successMessage,
 			@RequestParam(value = "errorMessage", required = false) String errorMessage) {
-		model.addAttribute("tenants", tenantService.getAllTenants());
+		model.addAttribute("tenants", tenantService.getTenantsByStatus("Active"));
 
 		if (successMessage != null) {
 			model.addAttribute("successMessage", successMessage);
@@ -141,6 +142,27 @@ public class MealController {
 		return "MealManagement/viewMeals";
 	}
 
+	
+
+    @GetMapping("/mealsByMonth")
+    public String getMealsByMonth(@RequestParam("monthYear") String monthYear, Model model) {
+        // monthYear format: "January 2025"
+        YearMonth ym = YearMonth.parse(
+                monthYear, 
+                java.time.format.DateTimeFormatter.ofPattern("MMMM yyyy")
+        );
+
+        int month = ym.getMonthValue(); // 1-12
+        int year = ym.getYear();
+
+        List<Meal> meals = mealService.getMealsByMonth(month, year);
+        model.addAttribute("meals", meals);
+        model.addAttribute("selectedMonth", monthYear);
+
+        return "MealManagement/viewMeals"; 
+    }
+    
+    
 	@GetMapping("/viewMeal")
 	public String viewMeals(
 			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,

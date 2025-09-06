@@ -45,4 +45,12 @@ public class MealServiceImpl implements MealService {
         return mealRepository.findById(mealId).orElse(null);
     }
 
+	@Override
+	public List<Meal> getMealsByMonth(int month, int year) {
+
+	  
+	        return mealRepository.findByMonthAndYear(month, year);
+	    
+	}
+
 }
