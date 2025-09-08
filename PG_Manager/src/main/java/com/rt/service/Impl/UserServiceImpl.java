@@ -8,17 +8,24 @@ import com.rt.repository.UserRepository;
 import com.rt.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-	private final UserRepository userRepository;
-	private final RoleRepository roleRepository;
+	@Autowired
+	private  UserRepository userRepository;
+	@Autowired
+	private  RoleRepository roleRepository;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
@@ -49,6 +56,10 @@ public class UserServiceImpl implements UserService {
 	    Set<Role> roles = new HashSet<>();
 	    roles.add(adminRole);
 	    user.setRoles(roles);
+	    
+	    if (passwordEncoder != null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
 
 	    userRepository.save(user);
 	}
@@ -74,7 +85,52 @@ public class UserServiceImpl implements UserService {
                    .findFirst()
                    .orElse("GUEST"); 
     }
+
     
+
+    public void saveUser(User user) {
+      
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    	userRepository.save(user);
+    }
+    
+    
+
+    
+    @Override
+    public void registerUserWithRole(User user, String roleName) {
+        System.out.println("Registering " + roleName + "...");
+
+        // find role or create if not exists
+        RoleType roleType = RoleType.valueOf(roleName.toUpperCase()); 
+        Role role = roleRepository.findByName(roleType).orElse(null);
+
+        if (role == null) {
+            role = new Role();
+            role.setName(roleType);
+            roleRepository.save(role);
+        }
+
+        // assign role
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        user.setRoles(roles);
+
+      
+//        if (passwordEncoder != null) {
+//            user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        }
+
+        userRepository.save(user);
+    }
+
+	@Override
+	public List<User> findManagersAndStaff() {
+		        return userRepository.findByRoles_NameIn(List.of(RoleType.MANAGER, RoleType.STAFF));
+		    }
+	
+
+
     
     
 }

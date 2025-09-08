@@ -1,9 +1,11 @@
 package com.rt.repository;
 
+import com.rt.entity.RoleType;
 import com.rt.entity.User;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -16,4 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
    
     @Query("SELECT COUNT(u) > 0 FROM User u JOIN u.roles r WHERE r.name = 'ADMIN'")
     boolean existsAdmin();
+
+	List<User> findByRoles_NameIn(List<RoleType> of);
 }

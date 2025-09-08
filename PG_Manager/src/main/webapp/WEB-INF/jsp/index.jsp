@@ -11,12 +11,10 @@
           <jsp:include page="modules/header.jsp"></jsp:include>
     </c:when>
     <c:when test="${userRole == 'MANAGER'}">
-     <h1 align="center">hi</h1>
-         <jsp:include page="modules/header.jsp"></jsp:include>
+       <jsp:include page="./modules/userHeader.jsp" />
     </c:when>
-    <c:when test="${userRole == 'TENANT'}">
-     <h1 align="center">good </h1>
-         <jsp:include page="modules/header.jsp"></jsp:include>
+    <c:when test="${userRole == 'STAFF'}">
+        <jsp:include page="./modules/userHeader.jsp" />
     </c:when>
     <c:otherwise>
         <p>You are not authorized to view this page.</p>
