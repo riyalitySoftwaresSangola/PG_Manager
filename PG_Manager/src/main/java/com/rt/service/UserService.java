@@ -2,6 +2,7 @@ package com.rt.service;
 
 import com.rt.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -13,6 +14,12 @@ public interface UserService {
 	boolean isAdminRegistered();
 
 	void registerAdmin(User user);
+
+	void saveUser(User user);
+
+	void registerUserWithRole(User user, String roleName);
+
+	List<User> findManagersAndStaff();
 
 	
 

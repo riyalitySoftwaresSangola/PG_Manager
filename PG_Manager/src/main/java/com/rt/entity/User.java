@@ -1,9 +1,24 @@
 package com.rt.entity;
 
-import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 import lombok.Getter;
 import lombok.Setter;
-import java.util.*;
 
 @Entity
 @Getter
@@ -23,6 +38,11 @@ public class User {
     
     @Column(name="password")
     private String password;
+    
+    
+    @Pattern(regexp = "^[6-9][0-9]{9}$", message = "Mobile must be 10 digits starting with 6–9")
+    @Column(nullable = false, unique = true, length = 10)
+    private String mobile;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

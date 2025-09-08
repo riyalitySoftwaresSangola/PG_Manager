@@ -30,6 +30,10 @@ public class RegisterController {
 		model.addAttribute("user", new User());
 		return "AuthPages/AuthRegister";
 	}
+	
+	
+	
+
 
 	@PostMapping("/register")
 	public String handleAdminRegister(@ModelAttribute User user) {

@@ -51,11 +51,11 @@ public class HomeConteroller {
 //		return "BillingAndPayment/billingForm";
 //	}
 
-	@RequestMapping("/paymentEntry")
-	public String paymentEntry() {
-
-		return "BillingAndPayment/paymentEntry";
-	}
+//	@RequestMapping("/paymentEntry")
+//	public String paymentEntry() {
+//
+//		return "BillingAndPayment/paymentEntry";
+//	}
 
 //	@RequestMapping("/complaints")
 //	public String complaints() {
